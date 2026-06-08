@@ -55,18 +55,35 @@ Locate the Odoo binary, configuration file, database name, and existing test fil
 - Configuration: `odoo.conf` path and active database (`db_name` or active logs database).
 - Module tests folder: `{module_path}/tests/` containing `__init__.py` and `test_*.py` files.
 
-### Step 2: Run Tests Via Command
+### Step 2: Detect Odoo Environment (MANDATORY)
+**Before running any commands, discover local Odoo install paths.**
+
+Detection methods (try in order):
+1. Check `ODOO_PYTHON` / `ODOO_BIN` / `ODOO_CONF` / `ODOO_DB` environment variables if set
+2. On Windows: `where odoo-bin` or check `C:\Program Files\Odoo *\server\odoo-bin`
+3. On Linux: `which odoo-bin` or `find / -name "odoo-bin" 2>/dev/null`
+4. Check `registry` key `HKLM:\Software\Odoo\` (Windows installer)
+5. Read Odoo config file for `db_name` (usually `odoo.conf` or `odoorc`)
+6. Ask user for paths if not found
+
+Once detected, these paths MUST be used for all commands below:
+- `{odoo_python}` — Python executable bundled with Odoo
+- `{odoo_bin}` — Path to odoo-bin
+- `{odoo_conf}` — Path to odoo.conf
+- `{db_name}` — Database name from config or user
+
+### Step 3: Run Tests Via Command
 Use the local Odoo python environment to run tests for the target module.
 Command template (Windows):
 ```powershell
-& "C:\Program Files\Odoo 19.0.20260531\python\python.exe" "C:\Program Files\Odoo 19.0.20260531\server\odoo-bin" -c "C:\Program Files\Odoo 19.0.20260531\server\odoo.conf" -d qphatt -i <module_name> --test-enable --stop-after-init --log-level=test
+& "{odoo_python}" "{odoo_bin}" -c "{odoo_conf}" -d {db_name} -i <module_name> --test-enable --stop-after-init --log-level=test
 ```
 For running specific tags (e.g. only security tests):
 ```powershell
-& "C:\Program Files\Odoo 19.0.20260531\python\python.exe" "C:\Program Files\Odoo 19.0.20260531\server\odoo-bin" -c "C:\Program Files\Odoo 19.0.20260531\server\odoo.conf" -d qphatt --test-tags <module_name> --stop-after-init
+& "{odoo_python}" "{odoo_bin}" -c "{odoo_conf}" -d {db_name} --test-tags <module_name> --stop-after-init
 ```
 
-### Step 3: Parse and Analyze Logs
+### Step 4: Parse and Analyze Logs
 Inspect the command output or Odoo log file. Look for:
 - `ERROR` or `CRITICAL` levels.
 - Failures flagged by the testing framework:

@@ -46,7 +46,7 @@ Before generating the plan, think through the following:
 3. Decide: **inherit** existing model (`_inherit`) or **create new** (`_name`)?
 
 ### 2.2 — Technical Verification (Direct Core & DB Inspection)
-1. You MUST locate and inspect the actual Odoo core files in the local filesystem (e.g. `C:\Program Files\Odoo 19.0.20260531\server\odoo\addons\` or `odoo/addons/base/models/`) or PostgreSQL system catalogs.
+1. You MUST locate and inspect the actual Odoo core files in the local filesystem (see `odoo.find` command or `where odoo-bin`, or check common install paths like `C:\Program Files\Odoo *\server\odoo\addons\`, or inspect `odoo/addons/base/models/` from the Odoo source) or PostgreSQL system catalogs.
 2. Verify method signatures, decorators, field types, and rules on any inherited models. Do NOT guess or rely on potentially outdated general patterns.
 3. Inspect view definitions in core to verify exactly how Odoo constructs search views, list views, and form sheets for the target version (e.g. verify if direct `invisible="..."` attribute is supported and how it's used in core).
 4. Identify any deprecated fields or methods (e.g., `check_credentials` signature changes or removal of `category_id` from `res.groups` in Odoo 19).
