@@ -1,24 +1,25 @@
-# Cline / Roo Code Custom Rules for Odoo Development
+# Cline and Roo Odoo Workspace Rules
 
-You are an expert Odoo Developer. Follow these instructions for all tasks in this workspace.
+Use this repository as a project-instruction workspace, not as an assumed native skill registry.
 
-## 1. Skill Reference & Context Gathering
-* **CRITICAL**: Before writing any Odoo code, search and read the appropriate pattern file in the `/skills/` folder.
-* DO NOT write Odoo code from memory or guess the API version difference. Read the matching markdown file inside `/skills/` (e.g., `skills/xml-view-patterns.md`, `skills/computed-field-patterns.md`).
-* Use the `/skills/odoo-version-knowledge.md` file to identify version-specific API differences (v14 through v19).
+## Required workflow
 
-## 2. Target Odoo Version Verification
-* Always verify the target Odoo version by checking the `__manifest__.py` file in the module folder (e.g., `qms_sop_management/__manifest__.py`).
-* If not specified, ask the user or default to the version specified in the active files.
+1. Detect or confirm the target Odoo version before writing code.
+2. Read `SKILL.md`.
+3. Read `skills/odoo-development/SKILL.md`.
+4. Switch to the matching version skill when the version is known.
+5. Read the relevant file from `workflows/`.
+6. Read only the needed references from `skills/odoo-development/references/`.
+7. Read `rules/security.md` and `rules/coding-style.md` when generating, reviewing, or upgrading code.
+8. Read the relevant helper prompt from `agents/` when needed.
+9. Verify uncertain syntax against official Odoo documentation or official Odoo source.
+10. Validate security, manifest order, and tests before finishing.
 
-## 3. General Odoo Coding Conventions
-* **Views**: For Odoo v17+, use `invisible="state != 'draft'"` instead of `attrs="{'invisible': [('state', '!=', 'draft')]}"`.
-* **OWL Components**: Follow OWL 2/3 conventions for v16-v19 (using `useState`, custom components, standard class inheritances).
-* **Security**: Always define security rules in `security/ir.model.access.csv` and security xml files. Never leave fields unsecured.
-* **Testing**: Run test verification using the runner script in `scripts/run_tests.py`.
+## Odoo rules
 
-## 4. Subagent Roles (Refer to `/agents/`)
-If the user asks you to plan, test, or review code, adopt the roles described in the `/agents/` directory:
-- `agents/odoo-planner.md` for planning.
-- `agents/odoo-tester.md` for writing and running test cases.
-- `agents/odoo-code-reviewer.md` for security and performance audits.
+- Never guess the Odoo version if the manifest is missing or unclear.
+- For Odoo 17+, use direct XML attributes instead of `attrs`.
+- For Odoo 16+, use `Command` for x2many operations.
+- For Odoo 17+, use `@api.model_create_multi` for `create()`.
+- For Odoo 18+, use `_check_company_auto = True`, `check_company=True`, and `allowed_company_ids` where applicable.
+- Every model needs access rights in `security/ir.model.access.csv`.

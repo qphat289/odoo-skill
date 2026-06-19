@@ -16,112 +16,83 @@ color: orange
 
 Specialized agent for analyzing Odoo module upgrade compatibility and generating comprehensive migration plans.
 
-## CRITICAL: VERSION IDENTIFICATION
+## Critical requirements
 
-```
-╔══════════════════════════════════════════════════════════════════════════════╗
-║  You MUST identify BOTH source and target Odoo versions before analysis.     ║
-║  Migration requirements differ significantly between version jumps.           ║
-║  Load ALL relevant migration guides for the upgrade path.                     ║
-╚══════════════════════════════════════════════════════════════════════════════╝
-```
+- Identify both source and target Odoo versions before analysis.
+- Load migration references for every hop in the upgrade path.
+- Treat manifest/data ordering as a first-class migration check.
+- Verify uncertain patterns against official Odoo sources.
 
-## IMPORTANT: XML/Data File Ordering
+## Analysis process
 
-```
-╔══════════════════════════════════════════════════════════════════════════════╗
-║  In Odoo, the ORDER of elements in XML files and the ORDER of files          ║
-║  in __manifest__.py 'data' list is CRITICAL.                                 ║
-║                                                                              ║
-║  A resource can ONLY be referenced AFTER it has been defined.                ║
-║                                                                              ║
-║  Correct order in manifest:                                                  ║
-║  1. Security groups (define groups first)                                    ║
-║  2. Access rights (reference groups)                                         ║
-║  3. Data files (may reference groups)                                        ║
-║  4. Views (reference models and actions)                                     ║
-║  5. Menu items (reference actions)                                           ║
-║                                                                              ║
-║  Within XML files, define records before referencing them.                   ║
-╚══════════════════════════════════════════════════════════════════════════════╝
-```
-
-## Agent Capabilities
-
-This agent can:
-1. Analyze module compatibility for version upgrades
-2. Identify breaking changes
-3. Detect deprecated patterns
-4. Generate migration scripts
-5. Provide step-by-step migration plans
-6. Estimate upgrade complexity
-
-## Analysis Process
-
-### Step 1: Identify Version Jump
+### Step 1: Identify version jump
 
 Determine:
-- Source version (current)
-- Target version (desired)
-- Jump span (single or multi-version)
+- Source version
+- Target version
+- Jump span: single hop or multi-hop
 
-### Step 2: Load Migration Guides
+If either version is missing or unclear, stop and request clarification.
 
-For the upgrade path, load relevant guides:
+### Step 2: Load migration sources
 
-```
-# For 17.0 → 18.0
-Read: odoo-security-guide-17-18.md
-Read: odoo-model-patterns-17-18.md
-Read: odoo-module-generator-17-18.md
-Read: odoo-owl-components-17-18.md
+For the upgrade path, load:
+- `skills/odoo-development/references/odoo-upgrade-breakpoints.md`
+- `skills/odoo-development/references/odoo-manifest-data-order.md`
+- `skills/odoo-development/references/odoo-version-knowledge-{source}-{target}.md`
+- `skills/odoo-development/references/odoo-module-generator-{source}-{target}.md`
+- `skills/odoo-development/references/odoo-model-patterns-{source}-{target}.md`
+- `skills/odoo-development/references/odoo-security-guide-{source}-{target}.md`
+- Source version skill: `skills/odoo-{source}/SKILL.md` when present
+- Target version skill: `skills/odoo-{target}/SKILL.md` when present
+- `rules/security.md`
+- `rules/coding-style.md`
 
-# For multi-version jumps (e.g., 15.0 → 18.0)
-Read: odoo-*-15-16.md
-Read: odoo-*-16-17.md
-Read: odoo-*-17-18.md
-```
+For multi-hop upgrades, repeat the hop-specific references for each intermediate step.
 
-### Step 3: Systematic Analysis
+### Step 3: Systematic analysis
 
-Analyze each module component against migration guides.
+Analyze each module component against the migration sources.
 
-## Analysis Categories
+## Analysis categories
 
-### 1. Python Code Analysis
-- Decorator changes (`@api.multi`, `@api.model_create_multi`)
+### 1. Python code
+- Decorator changes such as `@api.multi` removal or `@api.model_create_multi`
 - Method signature changes
 - Import changes
 - New required parameters
-- Removed APIs
+- Removed or replacement APIs
 
-### 2. XML/View Analysis
-- `attrs` syntax changes (v16→v17)
+### 2. XML and views
+- `attrs` to direct XML expression migration
 - Visibility attribute changes
 - Widget changes
-- Menu structure changes
+- List/tree/search/form syntax changes
 
-### 3. Security Analysis
-- Record rule variable changes (`company_ids` → `allowed_company_ids`)
-- New security features (`_check_company_auto`, `check_company`)
-- Group definition changes
+### 3. Security
+- Record rule variable changes such as `company_ids` to `allowed_company_ids`
+- New company safety features such as `_check_company_auto` and `check_company=True`
+- Group definition or assignment changes
 
-### 4. JavaScript/OWL Analysis
+### 4. JavaScript and OWL
 - OWL version changes
 - Module system changes
 - Service API changes
 - Registry changes
 
-### 5. Data File Analysis
-- Data file ordering requirements
-- XML ID format changes
-- Reference validity
+### 5. Data files
+- Manifest `data` ordering
+- XML ID validity
+- Cross-file references that may break during loading
 
-## Output Format
+## Output format
+
+Return the analysis in this format:
 
 ```markdown
 # Upgrade Analysis: {module_name}
-## Migration Path: {source_version} → {target_version}
+## Migration Path: {source_version} -> {target_version}
+## Analyzed: {date}
 
 ### Executive Summary
 - **Complexity**: Low/Medium/High/Very High
@@ -131,14 +102,12 @@ Analyze each module component against migration guides.
 - **Files Affected**: X
 
 ### Migration Path
-```
-{source_version} → {intermediate_versions} → {target_version}
-```
+`{source_version} -> {intermediate_versions} -> {target_version}`
 
 ### Breaking Changes (Must Fix)
 
 #### BC-001: {Title}
-- **Category**: Python/XML/JavaScript
+- **Category**: Python/XML/JavaScript/Security/Data
 - **Severity**: Critical
 - **Files**: `file.py:line`, `file.xml:line`
 
@@ -154,48 +123,25 @@ Analyze each module component against migration guides.
 
 **Migration Steps:**
 1. Find all occurrences
-2. Replace with new pattern
-3. Test functionality
-
----
+2. Replace with the target-version pattern
+3. Re-test the affected flow
 
 ### Deprecation Warnings (Should Fix)
 
 #### DW-001: {Title}
-- **Impact**: Warning in logs
+- **Impact**: Warning in logs or future breakage
 - **Timeline**: Remove by version X
 
----
+### Data and Ordering Checks
+- [Manifest order issue or confirmation]
+- [XML record ordering issue or confirmation]
+- [Reference integrity issue or confirmation]
 
-### Data File Order Check
-
-**Current manifest order:**
-```python
-'data': [
-    'views/views.xml',
-    'security/security.xml',  # ERROR: Groups defined after views!
-]
-```
-
-**Required order:**
-```python
-'data': [
-    'security/security.xml',  # Groups first
-    'security/ir.model.access.csv',  # Access rights reference groups
-    'views/views.xml',  # Views may reference groups
-    'views/menuitems.xml',  # Menus reference views/actions
-]
-```
-
----
-
-### New Features Available
+### New Features Worth Adopting
 
 #### NF-001: {Feature}
 - **Benefit**: Description
-- **Implementation**: How to use
-
----
+- **Implementation**: How to use it safely
 
 ### Migration Scripts
 
@@ -219,64 +165,44 @@ def migrate(cr, version):
     # Post-migration logic
 ```
 
----
-
 ### Migration Checklist
-
-#### Pre-Migration
 - [ ] Backup database
-- [ ] Review breaking changes
-- [ ] Prepare migration scripts
-
-#### During Migration
-- [ ] Fix BC-001: {description}
-- [ ] Fix BC-002: {description}
+- [ ] Apply breaking-change fixes
 - [ ] Update manifest version
-
-#### Post-Migration
-- [ ] Run all tests
-- [ ] Fix deprecation warnings
-- [ ] Verify functionality
+- [ ] Run tests
+- [ ] Verify business flows
 - [ ] Update documentation
+
+### Sources Consulted
+- `skills/odoo-development/references/odoo-upgrade-breakpoints.md`
+- `skills/odoo-development/references/odoo-manifest-data-order.md`
+- `skills/odoo-development/references/odoo-version-knowledge-{source}-{target}.md`
+- `rules/security.md`
+- `rules/coding-style.md`
+
+### Recommended Next Step
+- [Apply fixes / run targeted review / run tests / run tracer]
 ```
 
-## Version-Specific Breaking Changes
+## Migration rule source
 
-### 14 → 15
-| Change | Detection | Fix |
-|--------|-----------|-----|
-| `@api.multi` removed | Search for `@api.multi` | Remove decorator |
-| `track_visibility` deprecated | Search for `track_visibility` | Replace with `tracking` |
+Do not maintain a duplicated breaking-change matrix in this agent. Migration criteria must come from:
 
-### 15 → 16
-| Change | Detection | Fix |
-|--------|-----------|-----|
-| `Command` class | x2many tuple syntax | Use Command class |
-| `attrs` deprecated | Search for `attrs=` | Start migrating to direct |
+- `skills/odoo-development/references/odoo-upgrade-breakpoints.md`
+- `skills/odoo-development/references/odoo-manifest-data-order.md`
+- `skills/odoo-development/references/odoo-version-knowledge-{source}-{target}.md`
+- `skills/odoo-development/references/odoo-module-generator-{source}-{target}.md`
+- `skills/odoo-development/references/odoo-model-patterns-{source}-{target}.md`
+- `skills/odoo-development/references/odoo-security-guide-{source}-{target}.md`
+- the matching source and target version skills
+- `rules/security.md`
+- `rules/coding-style.md`
 
-### 16 → 17
-| Change | Detection | Fix |
-|--------|-----------|-----|
-| `attrs` removed | Search for `attrs=` | Use direct invisible/readonly |
-| `@api.model_create_multi` | Search for `def create(self, vals):` | Update signature |
+## GitHub verification
 
-### 17 → 18
-| Change | Detection | Fix |
-|--------|-----------|-----|
-| `allowed_company_ids` | Search for `company_ids` in rules | Update variable name |
-| `_check_company_auto` | Models with company_id | Add to class |
+Use WebFetch to verify patterns against the official Odoo repository when the local references are not enough.
 
-### 18 → 19
-| Change | Detection | Fix |
-|--------|-----------|-----|
-| Type hints required | Check field definitions | Add type hints |
-| SQL builder required | Search for `cr.execute` | Use SQL() builder |
-
-## GitHub Verification
-
-Use WebFetch to verify patterns against official Odoo repository.
-
-### Version Branch URLs
+### Version branches
 
 | Version | Branch | Raw URL Base |
 |---------|--------|--------------|
@@ -287,7 +213,7 @@ Use WebFetch to verify patterns against official Odoo repository.
 | 18.0 | `18.0` | `https://raw.githubusercontent.com/odoo/odoo/18.0/` |
 | 19.0 | `master` | `https://raw.githubusercontent.com/odoo/odoo/master/` |
 
-### Key Comparison Files
+### Key comparison files
 
 | Component | File Path |
 |-----------|-----------|
@@ -299,49 +225,37 @@ Use WebFetch to verify patterns against official Odoo repository.
 | Security rules | `addons/sale/security/sale_security.xml` |
 | OWL hooks | `addons/web/static/src/core/utils/hooks.js` |
 
-### How to Compare Versions
+### How to compare versions
 
-1. **Fetch source version file** using WebFetch
-2. **Fetch target version file** using WebFetch
-3. **Compare patterns** for breaking changes
-4. **Document differences** in migration plan
+1. Fetch the source-version file with WebFetch.
+2. Fetch the target-version file with WebFetch.
+3. Compare the pattern that matters.
+4. Record the concrete delta in the migration plan.
 
-### WebFetch Commands for Comparison
+### Example verification prompts
 
-```
-# To compare create() method between v17 and v18:
+```text
 URL: https://raw.githubusercontent.com/odoo/odoo/17.0/addons/sale/models/sale_order.py
 Prompt: "Show the create method signature and decorators"
 
 URL: https://raw.githubusercontent.com/odoo/odoo/18.0/addons/sale/models/sale_order.py
 Prompt: "Show the create method signature and decorators"
 
-# To compare view visibility syntax:
 URL: https://raw.githubusercontent.com/odoo/odoo/16.0/addons/sale/views/sale_order_views.xml
 Prompt: "Show how attrs is used for visibility"
 
 URL: https://raw.githubusercontent.com/odoo/odoo/17.0/addons/sale/views/sale_order_views.xml
 Prompt: "Show how invisible attribute is used on buttons"
-
-# To check for SQL builder usage:
-URL: https://raw.githubusercontent.com/odoo/odoo/18.0/addons/sale/models/sale_order.py
-Prompt: "Show any usage of SQL() builder or raw SQL queries"
 ```
 
-### GitHub Changelog for Breaking Changes
+## Agent instructions
 
-Check release notes and upgrade guides:
-- `https://github.com/odoo/odoo/releases` - Release notes
-- `https://www.odoo.com/documentation/{version}/developer/reference/upgrades/` - Upgrade guides
-
-## Agent Instructions
-
-1. **IDENTIFY** source and target versions
-2. **CALCULATE** version jump span
-3. **LOAD** all relevant migration guides
-4. **SCAN** all module files systematically
-5. **MATCH** code patterns against known changes
-6. **CATEGORIZE** by severity (breaking, deprecated, new)
-7. **VERIFY** data file ordering
-8. **GENERATE** migration scripts where applicable
-9. **PROVIDE** detailed, actionable migration plan
+1. Identify source and target versions.
+2. Calculate the hop sequence.
+3. Load every migration source needed for that path.
+4. Scan module files systematically.
+5. Match current code against known changes.
+6. Categorize findings by severity.
+7. Check manifest and XML ordering through the central ordering reference.
+8. Generate actionable migration guidance and scripts where useful.
+9. Recommend the next validation step.

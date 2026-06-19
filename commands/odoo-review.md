@@ -87,8 +87,8 @@ If not provided:
 ### Step 2: Load Version-Specific Knowledge
 
 ```
-Read: odoo-development/skills/odoo-security-guide-{version}.md
-Read: odoo-development/skills/odoo-model-patterns-{version}.md
+Read: skills/odoo-development/references/odoo-security-guide-{version}.md
+Read: skills/odoo-development/references/odoo-model-patterns-{version}.md
 ```
 
 ### Step 3: Perform Review
@@ -231,3 +231,4 @@ Review the module against these categories:
 
 **CRITICAL**: Step 2 is MANDATORY. NEVER perform manual reviews without the agent,
 and NEVER duplicate its work with parallel file exploration.
+

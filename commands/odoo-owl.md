@@ -62,7 +62,7 @@ What Odoo version are you targeting?
 ### Step 2: Load Version-Specific Skill
 
 ```
-Read: odoo-development/skills/odoo-owl-components-{version}.md
+Read: skills/odoo-development/references/odoo-owl-components-{version}.md
 ```
 
 ### Step 3: Gather Component Information
@@ -247,3 +247,4 @@ registry.category("actions").add("{action_name}", {ComponentName});
 4. **GENERATE**: Version-appropriate component code
 5. **INCLUDE**: Template XML and SCSS
 6. **UPDATE**: Manifest assets section
+

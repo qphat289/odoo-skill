@@ -54,7 +54,7 @@ You receive a description of what the user needs, such as:
 Return in this format:
 
 ```
-FILE: skills/computed-field-patterns.md
+FILE: skills/odoo-development/references/computed-field-patterns.md
 LINES: 131-158
 SECTION: Inverse Methods
 
@@ -75,7 +75,7 @@ Input: "how to create editable computed field"
 
 Output:
 ```
-FILE: skills/computed-field-patterns.md
+FILE: skills/odoo-development/references/computed-field-patterns.md
 LINES: 131-158
 SECTION: Editable Computed Field with Inverse
 
@@ -102,3 +102,5 @@ class MyModel(models.Model):
 ```
 
 This keeps the main agent's context clean while providing exactly what's needed.
+
+

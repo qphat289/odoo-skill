@@ -98,12 +98,12 @@ What Odoo version should I target?
 Based on the version, load the appropriate skill file:
 
 ```
-Read: odoo-development/skills/odoo-module-generator-{version}.md
+Read: skills/odoo-development/references/odoo-module-generator-{version}.md
 ```
 
 For example, for Odoo 18.0:
 ```
-Read: odoo-development/skills/odoo-module-generator-18.md
+Read: skills/odoo-development/references/odoo-module-generator-18.md
 ```
 
 ### Step 3: Gather Module Information
@@ -212,3 +212,5 @@ Generate files in the current working directory:
 
 **CRITICAL**: Step 2 is MANDATORY. NEVER skip the context gatherer agent invocation,
 and NEVER duplicate its work with parallel file exploration.
+
+

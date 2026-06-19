@@ -53,10 +53,10 @@ If not provided:
 Based on the version jump, load appropriate guides:
 
 ```
-Read: odoo-development/skills/odoo-module-generator-{from}-{to}.md
-Read: odoo-development/skills/odoo-security-guide-{from}-{to}.md
-Read: odoo-development/skills/odoo-model-patterns-{from}-{to}.md
-Read: odoo-development/skills/odoo-owl-components-{from}-{to}.md
+Read: skills/odoo-development/references/odoo-module-generator-{from}-{to}.md
+Read: skills/odoo-development/references/odoo-security-guide-{from}-{to}.md
+Read: skills/odoo-development/references/odoo-model-patterns-{from}-{to}.md
+Read: skills/odoo-development/references/odoo-owl-components-{from}-{to}.md
 ```
 
 ### Step 3: Analyze Module
@@ -232,3 +232,4 @@ For jumps spanning multiple versions (e.g., 14→18):
 5. **CATEGORIZE**: By severity (breaking, deprecated, new)
 6. **GENERATE**: Detailed migration plan with code examples
 7. **PROVIDE**: Migration scripts where applicable
+

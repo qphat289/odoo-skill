@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Development"
+  short_description: "Odoo addon workflow and version-aware references"
+  default_prompt: "Use the Odoo development skill to handle this addon task with the correct version-specific references."
+policy:
+  allow_implicit_invocation: true

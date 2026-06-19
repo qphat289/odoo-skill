@@ -1,11 +1,29 @@
 {
   "name": "odoo-development",
-  "description": "Comprehensive skill set for Odoo development, planning, testing, and security review across versions 14 to 19.",
-  "version": "1.0.0",
-  "defaultEnabled": true,
+  "description": "Odoo skill pack with packaged native skill, bundled references, workflows, and installer-oriented setup docs.",
+  "version": "1.1.0",
   "author": {
     "name": "qphat289"
   },
   "repository": "https://github.com/qphat289/odoo-skill.git",
-  "license": "MIT"
+  "license": "MIT",
+  "keywords": ["odoo", "python", "owl", "erp"],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Odoo Development",
+    "shortDescription": "Odoo native skill and bundled references",
+    "longDescription": "Packaged Odoo skill with bundled references, workflows, agents, and setup helpers for Codex and similar runtimes.",
+    "developerName": "qphat289",
+    "category": "Developer Tools",
+    "capabilities": ["Read", "Write"],
+    "websiteURL": "https://github.com/qphat289/odoo-skill",
+    "privacyPolicyURL": "https://github.com/qphat289/odoo-skill/blob/main/README.md",
+    "termsOfServiceURL": "https://github.com/qphat289/odoo-skill/blob/main/SETUP.md",
+    "defaultPrompt": [
+      "Review an Odoo module against the repo workflow.",
+      "Plan an Odoo feature for a specific version.",
+      "Find the right Odoo pattern document for a task."
+    ]
+  }
 }
+

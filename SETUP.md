@@ -1,127 +1,148 @@
-# Odoo Development Skill — Multi-Platform Setup
+# Odoo Skill Pack Setup
 
-This repo provides Odoo development patterns, subagents, and commands for AI-assisted coding. Use it with any AI coding platform.
+Use this file as an execution playbook.
 
-```
-odoo-skill/
-├── SKILL.md                 ← Entry point: always read this first
-├── .cursorrules             ← Cursor IDE config
-├── CLAUDE.md                ← Claude Code config
-├── .github/
-│   └── copilot-instructions.md  ← GitHub Copilot config
-├── .windsurfrules           ← Windsurf IDE config
-├── SETUP.md                 ← This file
-├── agents/                  ← Subagent role profiles (planner, tester, reviewer...)
-├── commands/                ← Slash commands (Claude Code plugin system)
-├── skills/                  ← Odoo pattern files (version-specific + domain-specific)
-├── scripts/                 ← Helper scripts
-└── docs/                    ← Extended documentation
-```
+If you are an AI agent asked to install this Odoo pack for a user, do not improvise the layout. Detect the target runtime, choose the matching install mode below, run the generic installer or a platform wrapper, then validate the result.
 
----
+## Goal
 
-## Quick Install by Platform
+Install the packaged Odoo skills into the user's preferred runtime with the correct combination of native skill discovery and adjacent support folders.
 
-### 1. Cursor IDE
+## Source of truth
 
-**No action needed.** `.cursorrules` at root is auto-detected by Cursor.
+- Shared router skill: `skills/odoo-development/`
+- Version skills: `skills/odoo-14.0/`, `skills/odoo-15.0/`, `skills/odoo-16.0/`, `skills/odoo-17.0/`, `skills/odoo-18.0/`, `skills/odoo-19.0/`
+- Skill metadata: `skills/odoo-development/agents/openai.yaml`
+- Shared workflows: `workflows/`
+- Shared helper prompts: `agents/`
+- Shared cross-version rules: `rules/`
+- Generic installer: `scripts/install_skill_pack.py`
+- Platform wrappers: `scripts/install_for_claude.ps1`, `scripts/install_for_codex.ps1`
+- Version detector: `scripts/detect_odoo_version.py`
+- Validator: `scripts/validate_layout.py`
 
-### 2. Claude Code
+## Preflight
 
-**No action needed** if using Claude Code's `--skill` flag with this repo as skill path.  
-Manual: copy or symlink this repo, then run:
-```bash
-claude --skill /path/to/odoo-skill
-```
+Before installing:
 
-`SKILL.md` at root serves as the Claude Code skill manifest.  
-Commands under `commands/` are auto-discovered if using Claude Code plugin system.
+1. Identify the target runtime.
+2. Identify whether the user wants project-scoped or user-scoped installation.
+3. Identify the target project path when using project scope.
+4. Run `python scripts/validate_layout.py` in this repository.
+5. Use `python scripts/detect_odoo_version.py` when the user also wants runtime Odoo-version detection guidance.
+6. Only then run the installer.
 
-### 3. GitHub Copilot (VS Code)
+## Runtime matrix
 
-- **VS Code:** Copilot auto-detects `.github/copilot-instructions.md` in repo root
-- **JetBrains:** Same file, supported natively
-- No extension needed — just open the repo
+### Generic native skill host
 
-### 4. Windsurf IDE
+- Required concept: one filesystem root that contains `skills/<skill-name>/SKILL.md` or equivalent per-host skill folders
+- Required adjacency: sibling `agents/`, `workflows/`, `rules/`, and `scripts/` next to that skill root
+- Preferred installer: `python scripts/install_skill_pack.py <skill-root>`
+- Use this when the runtime is not Claude/Codex but still supports file-based skill discovery
 
-Place `.windsurfrules` at project root. Windsurf auto-detects it (same format as `.cursorrules`).
+Install command:
 
-### 5. Claude Desktop / Claude.ai Projects
-
-Copy the contents of `CLAUDE.md` into Project Instructions / Custom Instructions in Claude Desktop or Claude.ai project settings.
-
-### 6. Continue.dev (VS Code / JetBrains)
-
-Add to `.continue/config.json`:
-```json
-{
-  "experimental": {
-    "skills": true
-  },
-  "skills": [
-    {
-      "title": "Odoo Development",
-      "path": "/path/to/odoo-skill/skills"
-    }
-  ]
-}
+```powershell
+python scripts/validate_layout.py
+python scripts/install_skill_pack.py C:\path\to\skill-root --force
 ```
 
-### 7. Aider
+### Claude Code
 
-```bash
-aider --read SKILL.md --read skills/ --read agents/
+- Native project skill path: `.claude/skills/<skill-name>/SKILL.md`
+- Native user skill path: `~/.claude/skills/<skill-name>/SKILL.md`
+- Required adjacency: `.claude/agents/`, `.claude/workflows/`, `.claude/rules/`, `.claude/scripts/`
+- Best default for one repository: project scope
+- Best default for reuse across many repositories: user scope
+- Plugin mode is optional and secondary; prefer native skill install first
+
+Install commands:
+
+```powershell
+python scripts/validate_layout.py
+powershell -ExecutionPolicy Bypass -File scripts/install_for_claude.ps1 -Scope project -TargetPath C:\path\to\target-repo
 ```
-Or add to `.aider.conf.yml`:
-```yaml
-read:
-  - SKILL.md
-  - skills/
-  - agents/
+
+```powershell
+python scripts/validate_layout.py
+powershell -ExecutionPolicy Bypass -File scripts/install_for_claude.ps1 -Scope user
 ```
 
-### 8. CodeGPT
+### OpenAI Codex
 
-Copy config files to `.codegpt/rules/odoo/` and reference in `.codegpt/rules.json`.
+- Native repo skill path: `.agents/skills/<skill-name>/SKILL.md`
+- Native user skill path: `~/.agents/skills/<skill-name>/SKILL.md`
+- Required adjacency: `.agents/agents/`, `.agents/workflows/`, `.agents/rules/`, `.agents/scripts/`
+- Best default for one repository: repo scope
+- Best default for reuse across many repositories: user scope
+- Plugin mode is optional and secondary; prefer native skill install first
 
----
+Install commands:
 
-## Tool Mapping
+```powershell
+python scripts/validate_layout.py
+powershell -ExecutionPolicy Bypass -File scripts/install_for_codex.ps1 -Scope repo -TargetPath C:\path\to\target-repo
+```
 
-The skill files and agents reference generic tools. Different platforms call them differently:
+```powershell
+python scripts/validate_layout.py
+powershell -ExecutionPolicy Bypass -File scripts/install_for_codex.ps1 -Scope user
+```
 
-| Generic | Cursor | Claude Code | Copilot | Windsurf |
-|---------|--------|-------------|---------|----------|
-| Read file | `Read` | `read_file` | `@workspace` + ask | Same as Cursor |
-| Search files | `Grep` | `grep` / `search_files` | `#file:search` | Same as Cursor |
-| List files | `Glob` | `ls` / `glob` | `#file` | Same as Cursor |
-| Browse URL | `WebFetch` | `browser` | Ask to fetch | Same as Cursor |
-| Web search | `WebSearch` | `web_search` | Bing search | Same as Cursor |
-| Run command | `command` | `Terminal` / `bash` | Terminal | Same as Cursor |
+### Project-instruction hosts
 
-When a skill says "Use Read tool on X", translate to your platform's equivalent.
+- Cursor: use `.cursorrules`
+- GitHub Copilot: use `.github/copilot-instructions.md`
+- Gemini or Antigravity: use `GEMINI.md`
+- Windsurf: use `.windsurfrules`
+- Cline and Roo: use `.clinerules`
+- Hermes: use `HERMES_SETUP.md` and `hermes-agent.json`
+- OpenClaw: use `openclaw-agent.json`
 
----
+For these hosts, do not claim native skill installation unless their current documentation explicitly supports a matching skill root. The safe default is project-instruction mode: keep this repository available in the workspace, then follow the host-specific instruction file above.
 
-## Workflow Summary
+## Agent procedure
 
-Regardless of platform, follow this flow:
+When a user says "use SETUP.md and install this Odoo pack for my IDE", follow this exact procedure:
 
-1. **Read `SKILL.md`** first
-2. **Detect Odoo version** from `__manifest__.py` or ask user
-3. **Load context** via agent profiles in `agents/` or load relevant skill files from `skills/` directly
-4. **Generate code** following version-specific patterns
-5. **Verify** against Github patterns, run tests
+1. Detect the IDE or runtime.
+2. Decide whether that runtime supports native skills or only project instructions.
+3. If it exposes a generic native skill root, prefer `python scripts/install_skill_pack.py`.
+4. Otherwise map it to `Claude Code` or `OpenAI Codex` if applicable.
+5. Otherwise keep the repository in project mode and rely on the host-specific instruction file.
+6. Prefer native skill installation over plugin installation when native support exists.
+7. Prefer project or repo scope unless the user explicitly wants cross-project reuse.
+8. Run `python scripts/validate_layout.py`.
+9. Run the generic installer or the matching wrapper when native skill install is supported.
+10. Confirm that the destination now contains `odoo-development/SKILL.md` and the adjacent support folders.
+11. Tell the user the exact discovery path or project instruction file that was populated.
+12. Give the user one smoke-test prompt.
 
----
+## Validation criteria
 
-## Files That Live at Root
+An installation is correct only if all of the following are true:
 
-| File | Purpose | Platform |
-|------|---------|----------|
-| `.cursorrules` | Agent instructions | Cursor IDE |
-| `CLAUDE.md` | Agent instructions | Claude Code |
-| `.github/copilot-instructions.md` | Custom instructions | GitHub Copilot |
-| `.windsurfrules` | Agent instructions | Windsurf |
-| `SETUP.md` | This guide | Human |
+- Destination folder contains `odoo-development/SKILL.md`
+- Destination folder contains version skills from `odoo-14.0` through `odoo-19.0`
+- Shared router skill contains `references/`
+- Adjacent support folders exist for `agents/`, `workflows/`, `rules/`, and `scripts/`
+- Root skill repo still validates with `python scripts/validate_layout.py`
+- The runtime-specific discovery path matches the matrix above
+
+## Smoke tests
+
+Use one of these after install:
+
+- "Use the Odoo development skill and review this addon for Odoo 18 security issues."
+- "Use the Odoo development skill and scaffold a new Odoo 18 module with one model and access rights."
+- "Use the Odoo development skill and tell me which reference file to load for OWL work in Odoo 19."
+
+## Notes
+
+- Do not claim that the knowledge base is auto-loaded from arbitrary folders.
+- Do not treat `agents/` or `workflows/` as native runtime registries unless that runtime explicitly supports them.
+- Prefer the generic installer when the runtime exposes a simple skill root and does not need a host-specific wrapper.
+- For Codex project behavior, keep `AGENTS.md` in the working repository when you want additional repo-level instructions.
+- For Claude project behavior, keep `CLAUDE.md` in the working repository when you want additional repo-level instructions.
+- For project-instruction hosts, keep the repository in the workspace and point the runtime at the matching host instruction file instead of claiming a native install that has not been verified.

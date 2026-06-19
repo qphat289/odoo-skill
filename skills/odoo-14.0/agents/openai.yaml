@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo 14.0"
+  short_description: "Version-specific Odoo 14 addon workflow"
+  default_prompt: "Use the Odoo 14.0 skill for this addon task and prefer Odoo 14 references."
+policy:
+  allow_implicit_invocation: true

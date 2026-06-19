@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo 16.0"
+  short_description: "Version-specific Odoo 16 addon workflow"
+  default_prompt: "Use the Odoo 16.0 skill for this addon task and prefer Odoo 16 references."
+policy:
+  allow_implicit_invocation: true

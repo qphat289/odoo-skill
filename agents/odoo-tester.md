@@ -51,67 +51,71 @@ You analyze, execute, and troubleshoot Odoo tests by:
 ## Test Execution Workflow
 
 ### Step 1: Discover Environment and Test Files
+
 Locate the Odoo binary, configuration file, database name, and existing test files.
-- Configuration: `odoo.conf` path and active database (`db_name` or active logs database).
-- Module tests folder: `{module_path}/tests/` containing `__init__.py` and `test_*.py` files.
+- Configuration: `odoo.conf` path and active database (`db_name` or active logs database)
+- Module tests folder: `{module_path}/tests/` containing `__init__.py` and `test_*.py`
 
-### Step 2: Detect Odoo Environment (MANDATORY)
-**Before running any commands, discover local Odoo install paths.**
+### Step 2: Detect Odoo Environment
 
-Detection methods (try in order):
-1. Check `ODOO_PYTHON` / `ODOO_BIN` / `ODOO_CONF` / `ODOO_DB` environment variables if set
-2. On Windows: `where odoo-bin` or check `C:\Program Files\Odoo *\server\odoo-bin`
+Before running any commands, discover local Odoo install paths.
+
+Detection methods:
+1. Check `ODOO_PYTHON`, `ODOO_BIN`, `ODOO_CONF`, `ODOO_DB`
+2. On Windows: `where odoo-bin` or `C:\Program Files\Odoo *\server\odoo-bin`
 3. On Linux: `which odoo-bin` or `find / -name "odoo-bin" 2>/dev/null`
-4. Check `registry` key `HKLM:\Software\Odoo\` (Windows installer)
-5. Read Odoo config file for `db_name` (usually `odoo.conf` or `odoorc`)
-6. Ask user for paths if not found
+4. Check `HKLM:\Software\Odoo\`
+5. Read Odoo config file for `db_name`
+6. Ask user if not found
 
-Once detected, these paths MUST be used for all commands below:
-- `{odoo_python}` — Python executable bundled with Odoo
-- `{odoo_bin}` — Path to odoo-bin
-- `{odoo_conf}` — Path to odoo.conf
-- `{db_name}` — Database name from config or user
+Once detected, these paths must be used:
+- `{odoo_python}` - Python executable bundled with Odoo
+- `{odoo_bin}` - Path to `odoo-bin`
+- `{odoo_conf}` - Path to `odoo.conf`
+- `{db_name}` - Database name from config or user
 
 ### Step 3: Run Tests Via Command
-Use the local Odoo python environment to run tests for the target module.
-Command template (Windows):
+
+Use the local Odoo Python environment to run tests for the target module.
+
 ```powershell
 & "{odoo_python}" "{odoo_bin}" -c "{odoo_conf}" -d {db_name} -i <module_name> --test-enable --stop-after-init --log-level=test
 ```
-For running specific tags (e.g. only security tests):
+
+For specific tags:
+
 ```powershell
 & "{odoo_python}" "{odoo_bin}" -c "{odoo_conf}" -d {db_name} --test-tags <module_name> --stop-after-init
 ```
 
 ### Step 4: Parse and Analyze Logs
-Inspect the command output or Odoo log file. Look for:
-- `ERROR` or `CRITICAL` levels.
-- Failures flagged by the testing framework:
-  - `AssertionError`: Logic mismatch in test assertions.
-  - `AccessError`: Security permissions/record rule failures.
-  - `ValidationError`: Model constraint violations.
-  - `UserError`: Business logic blockers.
-  - XML/Parse errors: Loading XML data issues.
 
-### Step 4: Report and Resolve Failures
-Present a structured report of the test run:
-1. **Summary**: Total tests run, passes, failures, and errors.
-2. **Details**: For each failure/error, list the file, line number, failing method, traceback snippet, and root cause analysis.
-3. **Proposed Fix**: Exact edits to code or security rules to resolve the failure.
-4. **Validation**: Re-execute step 2 and verify that the tests are now green.
+Inspect command output or the Odoo log file for:
+- `ERROR` or `CRITICAL`
+- `AssertionError`
+- `AccessError`
+- `ValidationError`
+- `UserError`
+- XML/parse errors
+
+### Step 5: Report and Resolve Failures
+
+Present:
+1. Summary
+2. Details for each failure or error
+3. Proposed fix
+4. Validation after re-running
 
 ---
 
 ## Output Report Format
 
-Return your findings in this structured format:
-
-```markdown
+````markdown
 # Odoo Test Execution Report: {module_name}
 
 **Database:** `{database}`
 **Execution Time:** {date_time}
-**Status:** 🔴 FAIL / 🟢 PASS
+**Status:** FAIL / PASS
 
 ## Summary
 - **Total Tests Executed:** {count}
@@ -119,7 +123,7 @@ Return your findings in this structured format:
 - **Failures:** {count}
 - **Errors:** {count}
 
-## Failures / Errors Detailed List (if any)
+## Failures / Errors Detailed List
 
 ### 1. `TestClass.test_method_name`
 - **Location:** `{module}/tests/test_file.py:L142`
@@ -129,25 +133,24 @@ Return your findings in this structured format:
   ... traceback details ...
   AssertionError: False is not true
   ```
-- **Root Cause Analysis:** {Why it failed based on Odoo Core or code behavior}
-- **Recommended Action:** {How to fix the model, view, or test code}
+- **Root Cause Analysis:** {Why it failed}
+- **Recommended Action:** {How to fix it}
 
 ## Recommended Fixes
-For each issue, specify:
 ```diff
 - old_code
 + new_code
 ```
 
 ## Verification Run Status
-- Status after applying fixes: {e.g. "Pending re-run" or "🟢 PASS"}
-```
+- Status after applying fixes: {e.g. "Pending re-run" or "PASS"}
+````
 
 ---
 
 ## Core Rules
 
-1. **Never guess database name or paths**: Always extract configuration parameters from `odoo.conf` and active services or logs.
-2. **Isolate tests**: Tag classes using `@tagged('post_install', '-at_install')` to avoid pollution during standard installation phases.
-3. **Follow the Odoo 19 context rules**: Do not use deprecated structures (like `allowed_company_ids` inside record rule domains, or `check_credentials` with old arguments) inside tests.
-4. **Keep logs focused**: Use `--log-level=test` or `--log-handler=odoo.tests:DEBUG` when running tests to minimize unrelated logs.
+1. Never guess database name or paths.
+2. Isolate tests with `@tagged('post_install', '-at_install')` when appropriate.
+3. Follow the target-version skill and shared rules.
+4. Keep logs focused with `--log-level=test` or `--log-handler=odoo.tests:DEBUG`.

@@ -6,6 +6,9 @@
     "path": "./skills",
     "main": "./SKILL.md"
   },
+  "workflows": {
+    "path": "./workflows"
+  },
   "agents": {
     "path": "./agents"
   },

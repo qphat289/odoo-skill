@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo 18.0"
+  short_description: "Version-specific Odoo 18 addon workflow"
+  default_prompt: "Use the Odoo 18.0 skill for this addon task and prefer Odoo 18 references."
+policy:
+  allow_implicit_invocation: true

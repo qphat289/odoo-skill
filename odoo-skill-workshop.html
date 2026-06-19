@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Odoo Skill Workshop Guide</title>
+  <style>
+    :root {
+      --bg: #f7f7f5;
+      --panel: #ffffff;
+      --panel-2: #fbf7f1;
+      --panel-3: #f7faff;
+      --ink: #222222;
+      --muted: #5f5f5b;
+      --line: #e8e8e3;
+      --accent: #b96827;
+      --accent-soft: #f8eadc;
+      --blue: #3468c9;
+      --blue-soft: #f1f6ff;
+      --green: #2d7f5e;
+      --green-soft: #eff9f4;
+      --shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+      --radius-xl: 20px;
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 10px;
+      --sidebar-w: 290px;
+      --content-w: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+
+    .layout {
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 20px;
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+    }
+
+    .brand {
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 18px;
+    }
+
+    .brand-badge {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #f3d5b6, #f9ead7);
+      color: #8a4e16;
+      font-weight: 900;
+      box-shadow: none;
+      margin-bottom: 12px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .brand p {
+      margin: 8px 0 0;
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .toc-title {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #8a867d;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .toc {
+      display: grid;
+      gap: 8px;
+    }
+
+    .toc a {
+      display: block;
+      text-decoration: none;
+      color: #374250;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      font-size: 14px;
+      line-height: 1.45;
+      transition: 0.18s ease;
+    }
+
+    .toc a:hover,
+    .toc a.active {
+      background: #f7f3ee;
+      border-color: #ebe4db;
+      color: #7e4715;
+      transform: translateX(2px);
+    }
+
+    .sidebar-note {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .content {
+      min-width: 0;
+    }
+
+    .hero,
+    .section {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(232, 220, 203, 0.92);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .hero {
+      padding: 32px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -50px;
+      top: -40px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(233, 220, 205, 0.55) 0%, rgba(233, 220, 205, 0) 72%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fbfaf8;
+      color: #7b6249;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .hero h2 {
+      margin: 18px 0 14px;
+      font-size: clamp(32px, 4.6vw, 50px);
+      line-height: 1.08;
+      max-width: 930px;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 900px;
+      font-size: 19px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .tag {
+      padding: 9px 13px;
+      border-radius: 999px;
+      background: #fcfcfb;
+      border: 1px solid var(--line);
+      color: #595953;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .section {
+      padding: 28px;
+      margin-bottom: 18px;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: 32px;
+      line-height: 1.15;
+    }
+
+    .section-intro {
+      margin: 0 0 22px;
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--muted);
+      max-width: 980px;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4,
+    .split {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .split { grid-template-columns: 0.9fr 1.1fr; }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      padding: 20px;
+    }
+
+    .soft-orange { background: #fff8ef; }
+    .soft-blue { background: #f6f8ff; }
+    .soft-green { background: #f2fbf6; }
+
+    .card h3,
+    .card h4 {
+      margin: 0 0 10px;
+      font-size: 21px;
+    }
+
+    .card p,
+    .card li,
+    .section p,
+    .section li {
+      font-size: 16px;
+      line-height: 1.72;
+      color: var(--muted);
+    }
+
+    .section p {
+      margin: 0;
+    }
+
+    ul,
+    ol {
+      margin: 0;
+      padding-left: 22px;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .node {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: white;
+      padding: 16px;
+      min-height: 132px;
+      position: relative;
+    }
+
+    .node .num {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      display: inline-grid;
+      place-items: center;
+      background: var(--accent-soft);
+      color: #8d531f;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .node h4 {
+      margin: 0 0 8px;
+      font-size: 17px;
+    }
+
+    .node p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .diagram {
+      display: grid;
+      gap: 12px;
+    }
+
+    .diagram-row {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .diagram-box {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 12px;
+      padding: 16px;
+      min-height: 120px;
+    }
+
+    .diagram-box strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 16px;
+      color: var(--ink);
+    }
+
+    .diagram-arrow {
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      color: var(--accent);
+      font-weight: 900;
+    }
+
+    .callout {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border: 1px solid #ebe3d7;
+      border-radius: 12px;
+      background: #faf7f2;
+      color: #655848;
+      font-size: 15px;
+      line-height: 1.65;
+      font-weight: 700;
+    }
+
+    .prompt,
+    .snippet {
+      margin-top: 14px;
+      background: #fbfaf8;
+      border: 1px solid #ece8e2;
+      border-radius: 12px;
+      padding: 16px;
+      white-space: pre-wrap;
+      font-family: "Cascadia Code", "Consolas", monospace;
+      color: #5f564d;
+      font-size: 15px;
+      line-height: 1.65;
+    }
+
+    .table-like {
+      display: grid;
+      gap: 8px;
+    }
+
+    .table-row {
+      display: grid;
+      grid-template-columns: 0.92fr 1.25fr;
+      gap: 0;
+      overflow: hidden;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: white;
+    }
+
+    .table-row div {
+      padding: 16px 18px;
+    }
+
+    .table-row div:first-child {
+      background: #faf7f2;
+      font-weight: 800;
+      color: #72563a;
+    }
+
+    code {
+      font-family: "Cascadia Code", "Consolas", monospace;
+      background: #f8f5ef;
+      border: 1px solid #ece6dd;
+      border-radius: 9px;
+      padding: 2px 7px;
+      color: #6f5840;
+      font-size: 0.94em;
+    }
+
+    .mini-note {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #8b8f96;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1180px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: static;
+        max-height: none;
+      }
+
+      .grid-4,
+      .grid-3,
+      .grid-2,
+      .split,
+      .diagram-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-badge">OS</div>
+        <h1>Odoo Skill Workshop</h1>
+        <p>Tài liệu ngắn cho team Odoo: cách dùng skill pack để làm việc hiệu quả hơn.</p>
+      </div>
+
+      <div class="toc-title">Mục lục</div>
+      <nav class="toc" id="toc">
+        <a href="#overview">1. Tổng quan</a>
+        <a href="#concepts">2. Skill / Agent / Workflow / Rule</a>
+        <a href="#example">3. Ví dụ cách hoạt động</a>
+        <a href="#agents-md">4. AGENTS.md hiệu quả</a>
+        <a href="#usage">5. Khi nào gọi skill, khi nào gọi agent</a>
+        <a href="#setup">6. SETUP.md và prompt setup</a>
+        <a href="#pipeline">7. Full pipeline coding</a>
+        <a href="#daily-flow">8. Flow dùng hằng ngày</a>
+        <a href="#improve">9. Cách chỉnh skill để agent đỡ sai</a>
+        <a href="#takeaway">10. Kết luận</a>
+      </nav>
+
+      <div class="sidebar-note">
+        Click mục lục để nhảy nhanh giữa các phần.
+        <br><br>
+        File này là HTML standalone, mở trực tiếp bằng browser là dùng được.
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="hero" id="overview">
+        <div class="eyebrow">Workshop Guide</div>
+        <h2>Dùng Odoo Skill để giảm đoán mò, giữ đúng quy trình, và tăng chất lượng output</h2>
+        <p>Bộ skill này không chỉ để agent code nhanh hơn. Nó buộc agent phải hiểu version, đọc đúng reference, đi đúng workflow, áp đúng rules, rồi mới generate, review và hoàn thiện output.</p>
+        <div class="hero-tags">
+          <div class="tag">Version-aware</div>
+          <div class="tag">Workflow-driven</div>
+          <div class="tag">Rule-based</div>
+          <div class="tag">Review-friendly</div>
+        </div>
+      </section>
+
+      <section class="section" id="concepts">
+        <h2>1. Skill, agent, workflow, rule là gì?</h2>
+        <p class="section-intro">Muốn dùng bộ này hiệu quả, cả team cần phân biệt rõ vai trò của từng lớp. Mỗi lớp có chức năng riêng. Không nên trộn chúng vào một file duy nhất.</p>
+
+        <div class="grid-4">
+          <div class="card soft-orange">
+            <h3>Skill</h3>
+            <p>Gói điều hướng và kiến thức. Skill chỉ cho agent phải đọc gì trước, dùng version nào, và tham chiếu file nào.</p>
+          </div>
+          <div class="card soft-blue">
+            <h3>Workflow</h3>
+            <p>Playbook cho từng loại việc. Ví dụ: tạo module, review module, nâng version module.</p>
+          </div>
+          <div class="card soft-green">
+            <h3>Rule</h3>
+            <p>Ràng buộc bắt buộc. Ví dụ: security, coding style, manifest order, version-specific constraints.</p>
+          </div>
+          <div class="card">
+            <h3>Agent</h3>
+            <p>Helper prompt theo vai trò. Ví dụ: planner, reviewer, tester, upgrade analyzer.</p>
+          </div>
+        </div>
+
+        <div class="callout">Điểm quan trọng: skill không thay workflow. Workflow không thay rule. Agent không thay source-of-truth.</div>
+      </section>
+
+      <section class="section" id="example">
+        <h2>2. Ví dụ cách mọi thứ hoạt động cùng nhau</h2>
+        <p class="section-intro">Ví dụ: user yêu cầu “Tạo sales approval module cho Odoo 18”. Agent không nên nhảy vào code ngay. Nó phải đi qua một chuỗi bước rõ ràng.</p>
+
+        <div class="flow">
+          <div class="node">
+            <div class="num">1</div>
+            <h4>Detect version</h4>
+            <p>Biết chính xác đây là Odoo 18. Nếu chưa rõ thì dừng và xác nhận.</p>
+          </div>
+          <div class="node">
+            <div class="num">2</div>
+            <h4>Load router skill</h4>
+            <p>Đọc <code>SKILL.md</code> và shared router skill.</p>
+          </div>
+          <div class="node">
+            <div class="num">3</div>
+            <h4>Switch version skill</h4>
+            <p>Chuyển sang <code>skills/odoo-18.0/</code> để dùng syntax và patterns đúng.</p>
+          </div>
+          <div class="node">
+            <div class="num">4</div>
+            <h4>Load workflow</h4>
+            <p>Đọc <code>workflows/generate-module.md</code> để biết thứ tự làm việc.</p>
+          </div>
+          <div class="node">
+            <div class="num">5</div>
+            <h4>Apply rules</h4>
+            <p>Áp <code>rules/security.md</code> và <code>rules/coding-style.md</code>.</p>
+          </div>
+          <div class="node">
+            <div class="num">6</div>
+            <h4>Call helper agent</h4>
+            <p>Nếu task phức tạp thì đọc thêm planner, reviewer hoặc tester agent.</p>
+          </div>
+        </div>
+
+        <div class="diagram" style="margin-top: 20px;">
+          <div class="diagram-row">
+            <div class="diagram-box"><strong>User request</strong>Tạo sales approval module cho Odoo 18</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-box"><strong>Skill router</strong>Chọn version skill, references, workflow phù hợp</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-box"><strong>Execution</strong>Code theo workflow, có rules và review checkpoints</div>
+          </div>
+        </div>
+
+        <div class="callout">Nếu không dùng cấu trúc này, agent rất dễ code theo memory và lẫn syntax giữa các version.</div>
+      </section>
+
+      <section class="section" id="agents-md">
+        <h2>3. AGENTS.md làm sao cho hiệu quả?</h2>
+        <p class="section-intro">AGENTS.md nên là file điều phối ở mức project. Nó không cần nhồi toàn bộ kiến thức Odoo. Nó cần nói rõ repo này là gì, agent phải đọc gì trước, và hard rules nào luôn phải nhớ.</p>
+
+        <div class="split">
+          <div class="card soft-orange">
+            <h3>AGENTS.md của repo này có 3 phần chính</h3>
+            <div class="table-like">
+              <div class="table-row">
+                <div>Meaning</div>
+                <div>Giải thích repo gồm router skill, version skills, knowledge base, workflows, rules, agents và scripts.</div>
+              </div>
+              <div class="table-row">
+                <div>Required workflow</div>
+                <div>Bắt agent đi đúng thứ tự: detect version, đọc skill, chọn workflow, đọc references, áp rules.</div>
+              </div>
+              <div class="table-row">
+                <div>Odoo rules</div>
+                <div>Giữ các hard rules ngắn gọn như version phải rõ, attrs cho 17+, Command cho 16+, access rights bắt buộc.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Nguyên tắc viết AGENTS.md tốt</h3>
+            <ul>
+              <li>Ngắn, rõ, chỉ giữ phần điều phối và hard rules.</li>
+              <li>Trỏ đúng source-of-truth thay vì copy lại nguyên nội dung của skill hoặc references.</li>
+              <li>Nói rõ “đọc gì trước, đọc gì sau”.</li>
+              <li>Không nhét chi tiết version table dài vào đây nếu đã có version skills riêng.</li>
+            </ul>
+
+            <div class="prompt">Khung tư duy khi viết AGENTS.md:
+1. Repo này là gì?
+2. Agent phải đọc file nào trước?
+3. Khi nào phải switch sang version skill?
+4. Rules nào luôn phải áp?
+5. Trước khi finish phải validate gì?</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="usage">
+        <h2>4. Khi code, sửa, review thì nên dùng như thế nào?</h2>
+        <p class="section-intro">Cách dễ nhớ nhất là: task rộng thì gọi skill. Task hẹp, vai trò rõ thì gọi agent chuyên trách.</p>
+
+        <div class="grid-2">
+          <div class="card soft-blue">
+            <h3>Nên gọi skill trực tiếp khi</h3>
+            <ul>
+              <li>Tạo mới module hoặc feature</li>
+              <li>Sửa bug functional hoặc technical</li>
+              <li>Muốn agent tự chọn đúng reference và workflow</li>
+              <li>Muốn đi full pipeline từ hiểu bài đến output cuối</li>
+            </ul>
+          </div>
+
+          <div class="card soft-green">
+            <h3>Nên gọi agent cụ thể khi</h3>
+            <ul>
+              <li>Chỉ cần plan</li>
+              <li>Chỉ cần review security hoặc style</li>
+              <li>Chỉ cần test strategy</li>
+              <li>Chỉ cần phân tích upgrade impact</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="grid-3" style="margin-top: 18px;">
+          <div class="card">
+            <h4>Code mới</h4>
+            <p>Gọi skill trước. Nêu rõ version, task, output mong muốn.</p>
+          </div>
+          <div class="card">
+            <h4>Sửa code</h4>
+            <p>Vẫn gọi skill nếu bug liên quan flow hoặc version. Chỉ gọi agent riêng nếu task rất hẹp.</p>
+          </div>
+          <div class="card">
+            <h4>Review code</h4>
+            <p>Có thể gọi skill hoặc gọi thẳng reviewer agent nếu mục tiêu chỉ là audit.</p>
+          </div>
+        </div>
+
+        <div class="snippet">Ví dụ prompt ngắn:
+Use the Odoo development skill for Odoo 18.
+Review this module for security, style, and version-specific issues.
+List findings first, then suggest fixes.</div>
+      </section>
+
+      <section class="section" id="setup">
+        <h2>5. SETUP.md dùng để làm gì? Prompt agent sao để setup cho chuẩn?</h2>
+        <p class="section-intro">SETUP.md là playbook cài đặt cho agent khác đọc và làm theo. Nó giúp agent không tự đoán host, không tự đoán path, và không cài thiếu support folders.</p>
+
+        <div class="grid-2">
+          <div class="card soft-orange">
+            <h3>Vai trò chính của SETUP.md</h3>
+            <ul>
+              <li>Phân biệt native skill host và project-instruction host</li>
+              <li>Chỉ rõ path cài đặt, scope cài đặt, wrapper script cần dùng</li>
+              <li>Buộc agent validate sau khi cài</li>
+              <li>Cho smoke test ngay sau setup</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Prompt setup mẫu</h3>
+            <div class="prompt">Dùng file SETUP.md trong repo này và setup bộ Odoo skill cho IDE của tôi là Codex.
+Ưu tiên native install nếu host có hỗ trợ.
+Sau khi setup xong, kiểm tra lại skill path, support folders, và cho tôi 1 prompt smoke test để dùng ngay.</div>
+          </div>
+        </div>
+
+        <div class="diagram" style="margin-top: 18px;">
+          <div class="diagram-row">
+            <div class="diagram-box"><strong>Detect host</strong>Codex, Claude, Cursor, Gemini...</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-box"><strong>Choose mode</strong>Native skill hoặc project instruction</div>
+            <div class="diagram-arrow">→</div>
+            <div class="diagram-box"><strong>Validate</strong>Check skill path, support folders, smoke test</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="pipeline">
+        <h2>6. Công dụng chính của bộ skill: full pipeline coding cho project demo Odoo</h2>
+        <p class="section-intro">Điểm mạnh thật sự của bộ skill này là giữ trọn pipeline delivery, không chỉ generate code lẻ tẻ.</p>
+
+        <div class="flow">
+          <div class="node">
+            <div class="num">1</div>
+            <h4>Requirements</h4>
+            <p>Nhận user story, spec thô hoặc business request.</p>
+          </div>
+          <div class="node">
+            <div class="num">2</div>
+            <h4>Create spec</h4>
+            <p>Tách models, fields, workflows, security, report needs.</p>
+          </div>
+          <div class="node">
+            <div class="num">3</div>
+            <h4>Create plan</h4>
+            <p>Xác định task order, dependency, risk và output mong muốn.</p>
+          </div>
+          <div class="node">
+            <div class="num">4</div>
+            <h4>Choose tech</h4>
+            <p>Xác định version, module split, OWL, security model.</p>
+          </div>
+          <div class="node">
+            <div class="num">5</div>
+            <h4>Generate code</h4>
+            <p>Scaffold, models, views, security, data, test files.</p>
+          </div>
+          <div class="node">
+            <div class="num">6</div>
+            <h4>Review & fix</h4>
+            <p>Check version rules, style, security, manifest order, test gap.</p>
+          </div>
+          <div class="node">
+            <div class="num">7</div>
+            <h4>Demo-ready</h4>
+            <p>Module chạy được, có note rõ và đủ để demo cho team hoặc khách.</p>
+          </div>
+        </div>
+
+        <div class="callout">Bộ skill giúp team chuẩn hóa cách làm từ đầu đến cuối, thay vì mỗi người prompt agent một kiểu.</div>
+      </section>
+
+      <section class="section" id="daily-flow">
+        <h2>7. Flow dùng hằng ngày cho team</h2>
+        <p class="section-intro">Nếu muốn áp dụng thực tế, đây là flow ngắn gọn mà team có thể dùng mỗi ngày.</p>
+
+        <div class="grid-3">
+          <div class="card soft-blue">
+            <h3>A. Trước khi code</h3>
+            <ul>
+              <li>Xác định Odoo version</li>
+              <li>Đọc router skill</li>
+              <li>Chọn workflow đúng</li>
+              <li>Đọc references cần thiết</li>
+            </ul>
+          </div>
+
+          <div class="card soft-orange">
+            <h3>B. Trong lúc code</h3>
+            <ul>
+              <li>Code theo plan</li>
+              <li>Không bỏ qua security</li>
+              <li>Không viết theo memory</li>
+              <li>Giữ output theo đúng module structure</li>
+            </ul>
+          </div>
+
+          <div class="card soft-green">
+            <h3>C. Trước khi giao</h3>
+            <ul>
+              <li>Review theo reviewer agent hoặc workflow review</li>
+              <li>Check manifest order</li>
+              <li>Check syntax theo version</li>
+              <li>Check test và warnings</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="prompt">Prompt daily use:
+Use the Odoo development skill for Odoo 18.
+Create spec first, then plan, then scaffold the module.
+After coding, run a security and style review before final output.</div>
+      </section>
+
+      <section class="section" id="improve">
+        <h2>8. Nếu agent code sai thì chỉnh skill như thế nào cho chuẩn?</h2>
+        <p class="section-intro">Khi agent sai, đừng chỉ vá ở prompt của một lần chạy. Hãy sửa đúng source-of-truth để lần sau agent tự né lỗi đó.</p>
+
+        <div class="grid-3">
+          <div class="card soft-orange">
+            <h3>Sửa rule</h3>
+            <p>Nếu lỗi là ràng buộc cứng, ví dụ thiếu access rights hoặc sai manifest order, hãy thêm hoặc chỉnh rule.</p>
+          </div>
+          <div class="card soft-blue">
+            <h3>Sửa reference</h3>
+            <p>Nếu lỗi do thiếu kiến thức, ví dụ pattern XML hoặc multi-company handling, hãy sửa file reference đúng chỗ.</p>
+          </div>
+          <div class="card soft-green">
+            <h3>Sửa workflow</h3>
+            <p>Nếu lỗi do agent làm sai thứ tự, ví dụ code trước khi có plan, hãy sửa workflow hoặc checklist execution.</p>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top: 18px;">
+          <div class="card">
+            <h3>Cách nghĩ nhanh</h3>
+            <ul>
+              <li>Lỗi chung, bắt buộc: sửa <code>rules/</code></li>
+              <li>Lỗi theo version hoặc domain: sửa reference hoặc version skill</li>
+              <li>Lỗi do sai thứ tự làm việc: sửa workflow</li>
+              <li>Lỗi chỉ xuất hiện lúc audit: sửa reviewer hoặc checklist review</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3>Common bug lặp lại thì làm sao?</h3>
+            <ul>
+              <li>Nếu bug lặp nhiều lần, gom nó thành checklist tái sử dụng</li>
+              <li>Đặt ở chỗ dễ áp nhất, thường là <code>rules/common-bugs.md</code></li>
+              <li>Buộc reviewer hoặc workflow cuối đọc file này trước khi finish</li>
+              <li>Chỉ tạo file riêng khi nhóm bug đủ ổn định và dùng lại được</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="card soft-blue" style="margin-top: 18px;">
+          <h3>Mẫu gọn để xử lý common bug</h3>
+          <div class="snippet">rules/
+  common-bugs.md
+
+Trong file:
+- tên lỗi
+- version ảnh hưởng
+- cách đúng
+- check nhanh trước khi finish</div>
+          <div class="callout">Nguyên tắc: không tạo file riêng cho mọi lỗi. Chỉ tạo khi lỗi đó lặp lại đủ nhiều để trở thành checklist dùng lại.</div>
+        </div>
+
+        <div class="prompt">Ví dụ prompt nâng chất lượng repo:
+We keep hitting the same Odoo 18 mistakes with access rights, manifest order, and XML syntax.
+Update the skill pack so these common bugs are caught earlier.
+If needed, add a reusable common-bugs checklist in the right place and wire it into the review workflow.</div>
+      </section>
+
+      <section class="section" id="takeaway">
+        <h2>9. Kết luận cho team</h2>
+        <p class="section-intro">Cách dùng bộ skill này hiệu quả nhất là coi nó như một operating system cho Odoo work, không chỉ là một folder markdown để tham khảo.</p>
+
+        <div class="grid-2">
+          <div class="card soft-green">
+            <h3>Best practice</h3>
+            <ul>
+              <li>Bắt đầu từ skill, không bắt đầu từ “code luôn”</li>
+              <li>Version phải rõ ngay từ đầu</li>
+              <li>Task lớn thì dùng full pipeline</li>
+              <li>Task nhỏ, vai trò rõ thì gọi agent chuyên trách</li>
+              <li>Khi agent sai, sửa source-of-truth chứ không chỉ sửa prompt tạm</li>
+            </ul>
+          </div>
+
+          <div class="card soft-blue">
+            <h3>Prompt mở đầu workshop demo</h3>
+            <div class="prompt">Use the Odoo development skill for Odoo 18.
+Take this requirement, create a short spec, then a plan,
+then scaffold the demo module and run a review checklist before final output.</div>
+            <p class="mini-note">Chỉ cần team thống nhất cách gọi skill và cách sửa source-of-truth, chất lượng output sẽ tăng dần theo thời gian.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const links = Array.from(document.querySelectorAll("#toc a"));
+    const sections = links
+      .map((link) => document.querySelector(link.getAttribute("href")))
+      .filter(Boolean);
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const id = "#" + entry.target.id;
+        links.forEach((link) => {
+          link.classList.toggle("active", link.getAttribute("href") === id);
+        });
+      });
+    }, {
+      rootMargin: "-35% 0px -50% 0px",
+      threshold: 0.1
+    });
+
+    sections.forEach((section) => observer.observe(section));
+  </script>
+</body>
+</html>

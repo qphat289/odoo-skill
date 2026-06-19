@@ -3,8 +3,8 @@
   "name": "Odoo Development Agent",
   "system_instructions_file": "./SKILL.md",
   "skills_directory": "./skills",
+  "workflows_directory": "./workflows",
   "agents_directory": "./agents",
-  "commands_directory": "./commands",
   "tools": [
     {
       "name": "run_tests",
