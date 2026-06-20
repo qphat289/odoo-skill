@@ -12,7 +12,7 @@ This root file is the project-mode entrypoint for the repository.
 1. Detect or confirm the target Odoo version before writing code. If it is not explicit, run `python scripts/detect_odoo_version.py`.
 2. Read `skills/odoo-development/SKILL.md`.
 3. Read the relevant file from `workflows/`.
-4. Read only the needed references from `skills/odoo-development/references/`.
+4. Read only the needed references from the smallest matching domain skill under `skills/`.
 5. Read the relevant helper prompt from `agents/` when needed.
 6. Read `rules/security.md` and `rules/coding-style.md` for generation, review, and upgrade work.
 7. Verify uncertain syntax against official Odoo sources.

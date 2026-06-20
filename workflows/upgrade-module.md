@@ -36,14 +36,23 @@ Read migration-specific guides to prevent syntax issues.
 ```python
 for source, target in hops:
     skills_to_load = [
-        f"skills/odoo-development/references/odoo-module-generator-{source}-{target}.md",
-        f"skills/odoo-development/references/odoo-model-patterns-{source}-{target}.md",
-        f"skills/odoo-development/references/odoo-security-guide-{source}-{target}.md",
-        f"skills/odoo-development/references/odoo-version-knowledge-{source}-{target}.md",
+        f"skills/odoo-module-generation/references/odoo-module-generator-{source}-{target}.md",
+        f"skills/odoo-models/references/odoo-model-patterns-{source}-{target}.md",
+        f"skills/odoo-security/references/odoo-security-guide-{source}-{target}.md",
+        f"skills/odoo-upgrade/references/odoo-version-knowledge-{source}-{target}.md",
     ]
 
     if has_owl_components(module_path):
-        skills_to_load.append(f"skills/odoo-development/references/odoo-owl-components-{source}-{target}.md")
+        skills_to_load.append(f"skills/odoo-owl/references/odoo-owl-components-{source}-{target}.md")
+
+    if has_controllers_or_external_api(module_path):
+        skills_to_load.append("skills/odoo-integrations/references/controller-api-patterns.md")
+
+    if has_cron_or_mail_flows(module_path):
+        skills_to_load.append("skills/odoo-automation/references/cron-automation-patterns.md")
+
+    if has_config_or_operational_logic(module_path):
+        skills_to_load.append("skills/odoo-operations/references/config-settings-patterns.md")
 ```
 
 ### STEP 3: Apply Transformations
@@ -98,3 +107,4 @@ output = {
     "manual_review_required": list_manual_items(),
 }
 ```
+

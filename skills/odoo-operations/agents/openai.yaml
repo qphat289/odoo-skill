@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Operations"
+  short_description: "Settings, validation, debugging, error handling, editions, and i18n patterns"
+  default_prompt: "Use the Odoo operations skill for settings, validation, debugging, error handling, edition, and i18n work."
+policy:
+  allow_implicit_invocation: true

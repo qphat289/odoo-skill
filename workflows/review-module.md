@@ -34,13 +34,40 @@ Read guidelines matching the module's target Odoo version.
 
 ```python
 skills_to_load = [
-    f"skills/odoo-development/references/odoo-model-patterns-{version}.md",
-    f"skills/odoo-development/references/odoo-security-guide-{version}.md",
-    "skills/odoo-development/references/odoo-performance-guide.md",
-    "skills/odoo-development/references/odoo-troubleshooting-guide.md",
+    f"skills/odoo-models/references/odoo-model-patterns-{version}.md",
+    f"skills/odoo-security/references/odoo-security-guide-{version}.md",
+    "skills/odoo-quality/references/odoo-performance-guide.md",
+    "skills/odoo-upgrade/references/odoo-troubleshooting-guide.md",
+    "skills/odoo-operations/references/logging-debugging-patterns.md",
     "rules/security.md",
     "rules/coding-style.md",
 ]
+
+if module_files["js"]:
+    skills_to_load.append(f"skills/odoo-owl/references/odoo-owl-components-{version}.md")
+
+if any("controllers" in path or "static" in path for path in module_files["python"] + module_files["xml"] + module_files["js"]):
+    skills_to_load.append("skills/odoo-integrations/references/controller-api-patterns.md")
+    if version in ["17", "18", "19"]:
+        skills_to_load.append(f"skills/odoo-integrations/references/api-version-notes-{version}.md")
+
+if any("data" in path or "cron" in path for path in module_files["xml"]):
+    skills_to_load.extend([
+        "skills/odoo-automation/references/cron-automation-patterns.md",
+        "skills/odoo-module-generation/references/xml-data-loading-patterns.md",
+    ])
+
+if any("mail.thread" in read(py) or "mail.activity.mixin" in read(py) or "portal.mixin" in read(py) or "rating.mixin" in read(py) for py in module_files["python"]):
+    skills_to_load.append("skills/odoo-models/references/mixin-composition-patterns.md")
+
+if any("@api.model_create_multi" in read(py) or "@api.onchange" in read(py) or "@api.constrains" in read(py) or "@api.ondelete" in read(py) for py in module_files["python"]):
+    skills_to_load.append("skills/odoo-models/references/decorator-decision-patterns.md")
+
+if any("savepoint" in read(py) or "cr.execute" in read(py) or "commit(" in read(py) or "rollback(" in read(py) for py in module_files["python"]):
+    skills_to_load.append("skills/odoo-operations/references/transaction-safety-patterns.md")
+
+if any("TransactionCase" in read(py) or "HttpCase" in read(py) or "Form(" in read(py) or "assertQueryCount" in read(py) for py in module_files["python"]):
+    skills_to_load.append("skills/odoo-quality/references/test-tooling-patterns.md")
 ```
 
 ### STEP 3: Analyze Each Area
@@ -88,3 +115,4 @@ report = {
     "recommendations": generate_recommendations(issues),
 }
 ```
+

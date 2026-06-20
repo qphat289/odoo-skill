@@ -44,8 +44,8 @@ You receive a description of what the user needs, such as:
 
 ## Process
 
-1. First, read `SKILL.md` to find the right skill file
-2. Read the specific skill file
+1. First, read `SKILL.md` or `agents/odoo-domain-selector.md` to find the right domain skill
+2. Read the specific domain skill
 3. Find the most relevant section (usually 20-50 lines)
 4. Return the excerpt with file path and line numbers
 
@@ -54,7 +54,7 @@ You receive a description of what the user needs, such as:
 Return in this format:
 
 ```
-FILE: skills/odoo-development/references/computed-field-patterns.md
+FILE: skills/odoo-models/references/computed-field-patterns.md
 LINES: 131-158
 SECTION: Inverse Methods
 
@@ -75,7 +75,7 @@ Input: "how to create editable computed field"
 
 Output:
 ```
-FILE: skills/odoo-development/references/computed-field-patterns.md
+FILE: skills/odoo-models/references/computed-field-patterns.md
 LINES: 131-158
 SECTION: Editable Computed Field with Inverse
 

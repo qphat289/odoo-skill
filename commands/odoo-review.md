@@ -87,8 +87,17 @@ If not provided:
 ### Step 2: Load Version-Specific Knowledge
 
 ```
-Read: skills/odoo-development/references/odoo-security-guide-{version}.md
-Read: skills/odoo-development/references/odoo-model-patterns-{version}.md
+Read: skills/odoo-security/references/odoo-security-guide-{version}.md
+Read: skills/odoo-models/references/odoo-model-patterns-{version}.md
+```
+
+Load extra domain skills only when the module content requires them:
+
+```
+Has controllers / website / API code -> skills/odoo-integrations/SKILL.md
+Has cron / mail automation / sequences -> skills/odoo-automation/SKILL.md
+Has business-heavy stock / sale / account / hr logic -> skills/odoo-business-domains/SKILL.md
+Needs debugging / validation / config review -> skills/odoo-operations/SKILL.md
 ```
 
 ### Step 3: Perform Review
@@ -231,4 +240,5 @@ Review the module against these categories:
 
 **CRITICAL**: Step 2 is MANDATORY. NEVER perform manual reviews without the agent,
 and NEVER duplicate its work with parallel file exploration.
+
 

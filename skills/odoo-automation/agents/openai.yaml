@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Automation"
+  short_description: "Cron jobs, notifications, sequences, and background workflow patterns"
+  default_prompt: "Use the Odoo automation skill for cron jobs, notifications, sequences, and background workflow logic."
+policy:
+  allow_implicit_invocation: true

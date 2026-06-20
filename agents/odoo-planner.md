@@ -276,10 +276,10 @@ Reading relevant patterns...
 
 ### Step 2 - Read skill reference before writing code
 
-- Models -> `skills/odoo-development/references/odoo-module-checklist.md`
-- Views -> the matching version skill and `skills/odoo-development/references/xml-view-patterns.md`
+- Models -> `skills/odoo-module-generation/references/odoo-module-checklist.md`
+- Views -> the matching version skill and `skills/odoo-views/references/xml-view-patterns.md`
 - Security -> `ir.model.access.csv` format from checklist
-- Manifest/data ordering -> `skills/odoo-development/references/odoo-manifest-data-order.md`
+- Manifest/data ordering -> `skills/odoo-module-generation/references/odoo-manifest-data-order.md`
 - Cross-cutting rules -> `rules/security.md`, `rules/coding-style.md`
 
 ### Step 3 - Write the code
@@ -372,3 +372,4 @@ Recommended next steps:
 4. One task at a time.
 5. Read skill/checklist before coding.
 6. Blockers go into `PLAN.md`, not only chat.
+

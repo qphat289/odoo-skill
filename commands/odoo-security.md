@@ -76,7 +76,7 @@ What Odoo version? (14.0-19.0)
 ### Step 2: Load Version-Specific Skill
 
 ```
-Read: skills/odoo-development/references/odoo-security-guide-{version}.md
+Read: skills/odoo-security/references/odoo-security-guide-{version}.md
 ```
 
 ### Step 3: Gather Information (for generate)
@@ -207,4 +207,5 @@ partner_id = fields.Many2one('res.partner', check_company=True)
    - Check for vulnerabilities
    - Verify patterns match version
 5. **OUTPUT**: Structured results with actionable items
+
 

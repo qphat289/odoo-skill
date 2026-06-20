@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Module Generation"
+  short_description: "Module scaffolding, manifests, file tree, and install order"
+  default_prompt: "Use the Odoo module generation skill for scaffolding, manifests, and module structure."
+policy:
+  allow_implicit_invocation: true

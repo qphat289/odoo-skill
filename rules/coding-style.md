@@ -4,7 +4,7 @@ Use these rules across generation, review, and upgrade tasks. This file compleme
 
 ## Module structure
 
-- Keep manifest data ordered by dependency; use `skills/odoo-development/references/odoo-manifest-data-order.md` as the central ordering reference.
+- Keep manifest data ordered by dependency; use `skills/odoo-module-generation/references/odoo-manifest-data-order.md` as the central ordering reference.
 - Keep models, wizards, controllers, and reports in their standard folders.
 - Use one clear responsibility per file where practical.
 
@@ -34,3 +34,4 @@ Use these rules across generation, review, and upgrade tasks. This file compleme
 - Method size/cohesion
 - Version-correct XML syntax
 - Missing tests for business/security logic
+

@@ -13,6 +13,17 @@ SKILL_NAMES = [
     "odoo-17.0",
     "odoo-18.0",
     "odoo-19.0",
+    "odoo-module-generation",
+    "odoo-models",
+    "odoo-security",
+    "odoo-views",
+    "odoo-owl",
+    "odoo-upgrade",
+    "odoo-quality",
+    "odoo-integrations",
+    "odoo-automation",
+    "odoo-business-domains",
+    "odoo-operations",
 ]
 SUPPORT_FOLDERS = [
     "agents",
@@ -38,6 +49,13 @@ def main() -> None:
     destination_root = Path(args.destination_root).resolve()
     support_root = Path(args.support_root).resolve()
     destination_root.mkdir(parents=True, exist_ok=True)
+    shared_root = destination_root.parent
+
+    if shared_root == support_root:
+        raise SystemExit(
+            "Destination root cannot live directly under the source repository root. "
+            "Choose a separate skill root so support folders are not overwritten."
+        )
 
     for skill_name in SKILL_NAMES:
         source = source_root / skill_name
@@ -51,7 +69,6 @@ def main() -> None:
         shutil.copytree(source, destination)
         print(f"Installed: {destination}")
 
-    shared_root = destination_root.parent
     for folder_name in SUPPORT_FOLDERS:
         source = support_root / folder_name
         if not source.exists():

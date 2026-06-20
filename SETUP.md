@@ -12,6 +12,8 @@ Install the packaged Odoo skills into the user's preferred runtime with the corr
 
 - Shared router skill: `skills/odoo-development/`
 - Version skills: `skills/odoo-14.0/`, `skills/odoo-15.0/`, `skills/odoo-16.0/`, `skills/odoo-17.0/`, `skills/odoo-18.0/`, `skills/odoo-19.0/`
+- Domain skills: `skills/odoo-module-generation/`, `skills/odoo-models/`, `skills/odoo-security/`, `skills/odoo-views/`, `skills/odoo-owl/`, `skills/odoo-upgrade/`, `skills/odoo-quality/`
+- Extended domain skills: `skills/odoo-integrations/`, `skills/odoo-automation/`, `skills/odoo-business-domains/`, `skills/odoo-operations/`
 - Skill metadata: `skills/odoo-development/agents/openai.yaml`
 - Shared workflows: `workflows/`
 - Shared helper prompts: `agents/`
@@ -125,7 +127,8 @@ An installation is correct only if all of the following are true:
 
 - Destination folder contains `odoo-development/SKILL.md`
 - Destination folder contains version skills from `odoo-14.0` through `odoo-19.0`
-- Shared router skill contains `references/`
+- Destination folder contains the core and extended domain skills listed above
+- Shared router skill contains only router and authoring references
 - Adjacent support folders exist for `agents/`, `workflows/`, `rules/`, and `scripts/`
 - Root skill repo still validates with `python scripts/validate_layout.py`
 - The runtime-specific discovery path matches the matrix above

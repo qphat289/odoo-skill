@@ -1,50 +1,62 @@
 ---
 name: odoo-development
-description: Odoo development workflow for module generation, review, upgrade, security, OWL, reports, testing, and performance across Odoo 14-19. Use when Codex or Claude needs a native packaged skill for Odoo addons, manifests, XML views, ORM logic, migrations, tracebacks, or addon code review.
+description: Odoo development router for Odoo 14-19. Use when the version is unknown at first or when the task spans multiple domains such as module scaffolding, models, security, views, OWL, upgrade, testing, or performance.
 ---
 
 # Odoo Development
 
-Use this skill as the version router and shared Odoo pack entrypoint. Prefer the matching version-specific skill `odoo-14.0` through `odoo-19.0` once the target version is known.
+Use this skill as the top-level router for the Odoo pack. Once the version and domain are known, switch to the matching version skill and domain skill.
 
 ## Mandatory procedure
 
 1. Detect or confirm the target Odoo version before writing code. If needed, run `python ../../scripts/detect_odoo_version.py`.
-2. Switch to the matching version-specific skill when possible:
+2. Switch to the matching version-specific skill:
    - `../odoo-14.0/SKILL.md`
    - `../odoo-15.0/SKILL.md`
    - `../odoo-16.0/SKILL.md`
    - `../odoo-17.0/SKILL.md`
    - `../odoo-18.0/SKILL.md`
    - `../odoo-19.0/SKILL.md`
-3. Read the matching workflow in `../../workflows/`.
-4. Read only the references needed for the version and task.
-5. Read `../../rules/security.md` and `../../rules/coding-style.md` when generating or reviewing code.
-6. Use helper prompts from `../../agents/` only when they materially improve the task.
-7. Verify uncertain syntax against official Odoo docs or source.
-8. Validate security, manifest order, and tests before finishing.
+3. Load the matching domain skill:
+   - `../odoo-module-generation/SKILL.md`
+   - `../odoo-models/SKILL.md`
+   - `../odoo-security/SKILL.md`
+   - `../odoo-views/SKILL.md`
+   - `../odoo-owl/SKILL.md`
+   - `../odoo-upgrade/SKILL.md`
+   - `../odoo-quality/SKILL.md`
+   - `../odoo-integrations/SKILL.md`
+   - `../odoo-automation/SKILL.md`
+   - `../odoo-business-domains/SKILL.md`
+   - `../odoo-operations/SKILL.md`
+4. Read the matching workflow in `../../workflows/`.
+5. Read only the references needed for the version and domain.
+6. Read `../../rules/security.md` and `../../rules/coding-style.md` when generating or reviewing code.
+7. Use helper prompts from `../../agents/` only when they materially improve the task.
+8. Verify uncertain syntax against official Odoo docs or source.
+9. Validate security, manifest order, and tests before finishing.
 
-## Version routing
+## Quick reference
 
-- Odoo 14: `references/odoo-*-14.md`, `references/odoo-*-14-15.md`
-- Odoo 15: `references/odoo-*-15.md`, `references/odoo-*-15-16.md`
-- Odoo 16: `references/odoo-*-16.md`, `references/odoo-*-16-17.md`
-- Odoo 17: `references/odoo-*-17.md`, `references/odoo-*-17-18.md`
-- Odoo 18: `references/odoo-*-18.md`, `references/odoo-*-18-19.md`
-- Odoo 19: `references/odoo-*-19.md`, `references/odoo-*-18-19.md`
+| Domain | Skill | When to use |
+|---|---|---|
+| Version routing | `odoo-14.0` to `odoo-19.0` | Choose exact version before coding |
+| Module scaffolding | `odoo-module-generation` | Manifest, file tree, scaffold, install order |
+| ORM and model logic | `odoo-models` | Fields, domains, computes, inheritance, CRUD |
+| Security | `odoo-security` | ACL, record rules, groups, multi-company |
+| XML and reports | `odoo-views` | Views, QWeb, actions, menus, reports, wizards |
+| OWL and frontend | `odoo-owl` | OWL components, assets, web client changes |
+| Upgrade and migration | `odoo-upgrade` | Version deltas, migration references, troubleshooting |
+| Testing and performance | `odoo-quality` | Tests, review checks, performance and validation |
+| Integrations | `odoo-integrations` | Controllers, import/export, APIs, website, attachments |
+| Automation | `odoo-automation` | Cron jobs, sequences, mail, background flows |
+| Business flows | `odoo-business-domains` | Sales, stock, accounting, HR, project, pricing patterns |
+| Operations | `odoo-operations` | Settings, validation, debugging, error handling, i18n |
 
-## Reference map
+## Router-only references
 
-- Module scaffolding: `references/odoo-module-generator-<version>.md`
-- Model patterns: `references/odoo-model-patterns-<version>.md`
-- Security: `references/odoo-security-guide-<version>.md`
-- Version deltas: `references/odoo-version-knowledge-<version>.md`
-- OWL: `references/odoo-owl-components-<version>.md`
-- Views: `references/xml-view-patterns.md`
-- Reports: `references/report-patterns.md`
-- Tests: `references/odoo-test-patterns.md`
-- Performance: `references/odoo-performance-guide.md`
-- Troubleshooting: `references/odoo-troubleshooting-guide.md`
+Keep `references/` under this skill for repository routing and skill-authoring material only.
+Do not treat it as the main implementation knowledge base when a domain skill already exists.
 
 ## Hard rules
 
@@ -52,5 +64,5 @@ Use this skill as the version router and shared Odoo pack entrypoint. Prefer the
 - For Odoo 17+, use direct XML attributes such as `invisible="expr"` instead of `attrs`.
 - For Odoo 16+, prefer `Command` for x2many operations.
 - For Odoo 17+, use `@api.model_create_multi` for `create()`.
-- For Odoo 18+, use `_check_company_auto = True`, `check_company=True`, and `allowed_company_ids` where applicable.
+- For Odoo 18+, use `_check_company_auto = True`, `check_company=True`, keep record rules on `company_ids`, and use `allowed_company_ids` only for Python/context propagation when needed.
 - Every model needs access rights in `security/ir.model.access.csv`.

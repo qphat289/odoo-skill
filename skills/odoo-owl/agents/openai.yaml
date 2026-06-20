@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo OWL"
+  short_description: "OWL components, services, assets, and web client customization"
+  default_prompt: "Use the Odoo OWL skill for frontend assets and OWL component work."
+policy:
+  allow_implicit_invocation: true

@@ -37,12 +37,16 @@ If either version is missing or unclear, stop and request clarification.
 ### Step 2: Load migration sources
 
 For the upgrade path, load:
-- `skills/odoo-development/references/odoo-upgrade-breakpoints.md`
-- `skills/odoo-development/references/odoo-manifest-data-order.md`
-- `skills/odoo-development/references/odoo-version-knowledge-{source}-{target}.md`
-- `skills/odoo-development/references/odoo-module-generator-{source}-{target}.md`
-- `skills/odoo-development/references/odoo-model-patterns-{source}-{target}.md`
-- `skills/odoo-development/references/odoo-security-guide-{source}-{target}.md`
+- `skills/odoo-upgrade/references/odoo-upgrade-breakpoints.md`
+- `skills/odoo-module-generation/references/odoo-manifest-data-order.md`
+- `skills/odoo-upgrade/references/odoo-version-knowledge-{source}-{target}.md`
+- `skills/odoo-module-generation/references/odoo-module-generator-{source}-{target}.md`
+- `skills/odoo-models/references/odoo-model-patterns-{source}-{target}.md`
+- `skills/odoo-security/references/odoo-security-guide-{source}-{target}.md`
+- `skills/odoo-integrations/references/controller-api-patterns.md` when the module exposes controllers, website endpoints, or external API sync
+- `skills/odoo-automation/references/cron-automation-patterns.md` when the module uses cron, notifications, or sequences
+- `skills/odoo-operations/references/config-settings-patterns.md` when the module uses settings, validation contracts, or operational diagnostics
+- `skills/odoo-business-domains/references/` when business semantics from stock, sale, accounting, HR, or project drive the migration risk
 - Source version skill: `skills/odoo-{source}/SKILL.md` when present
 - Target version skill: `skills/odoo-{target}/SKILL.md` when present
 - `rules/security.md`
@@ -70,7 +74,8 @@ Analyze each module component against the migration sources.
 - List/tree/search/form syntax changes
 
 ### 3. Security
-- Record rule variable changes such as `company_ids` to `allowed_company_ids`
+- Keep record-rule domains aligned with documented variables such as `company_ids`
+- Forward `allowed_company_ids` in Python/context only when active company scope must be propagated explicitly
 - New company safety features such as `_check_company_auto` and `check_company=True`
 - Group definition or assignment changes
 
@@ -174,9 +179,9 @@ def migrate(cr, version):
 - [ ] Update documentation
 
 ### Sources Consulted
-- `skills/odoo-development/references/odoo-upgrade-breakpoints.md`
-- `skills/odoo-development/references/odoo-manifest-data-order.md`
-- `skills/odoo-development/references/odoo-version-knowledge-{source}-{target}.md`
+- `skills/odoo-upgrade/references/odoo-upgrade-breakpoints.md`
+- `skills/odoo-module-generation/references/odoo-manifest-data-order.md`
+- `skills/odoo-upgrade/references/odoo-version-knowledge-{source}-{target}.md`
 - `rules/security.md`
 - `rules/coding-style.md`
 
@@ -188,12 +193,15 @@ def migrate(cr, version):
 
 Do not maintain a duplicated breaking-change matrix in this agent. Migration criteria must come from:
 
-- `skills/odoo-development/references/odoo-upgrade-breakpoints.md`
-- `skills/odoo-development/references/odoo-manifest-data-order.md`
-- `skills/odoo-development/references/odoo-version-knowledge-{source}-{target}.md`
-- `skills/odoo-development/references/odoo-module-generator-{source}-{target}.md`
-- `skills/odoo-development/references/odoo-model-patterns-{source}-{target}.md`
-- `skills/odoo-development/references/odoo-security-guide-{source}-{target}.md`
+- `skills/odoo-upgrade/references/odoo-upgrade-breakpoints.md`
+- `skills/odoo-module-generation/references/odoo-manifest-data-order.md`
+- `skills/odoo-upgrade/references/odoo-version-knowledge-{source}-{target}.md`
+- `skills/odoo-module-generation/references/odoo-module-generator-{source}-{target}.md`
+- `skills/odoo-models/references/odoo-model-patterns-{source}-{target}.md`
+- `skills/odoo-security/references/odoo-security-guide-{source}-{target}.md`
+- `skills/odoo-integrations/references/controller-api-patterns.md` when needed
+- `skills/odoo-automation/references/cron-automation-patterns.md` when needed
+- `skills/odoo-operations/references/config-settings-patterns.md` when needed
 - the matching source and target version skills
 - `rules/security.md`
 - `rules/coding-style.md`
@@ -211,7 +219,7 @@ Use WebFetch to verify patterns against the official Odoo repository when the lo
 | 16.0 | `16.0` | `https://raw.githubusercontent.com/odoo/odoo/16.0/` |
 | 17.0 | `17.0` | `https://raw.githubusercontent.com/odoo/odoo/17.0/` |
 | 18.0 | `18.0` | `https://raw.githubusercontent.com/odoo/odoo/18.0/` |
-| 19.0 | `master` | `https://raw.githubusercontent.com/odoo/odoo/master/` |
+| 19.0 | `19.0` | `https://raw.githubusercontent.com/odoo/odoo/19.0/` |
 
 ### Key comparison files
 
@@ -259,3 +267,4 @@ Prompt: "Show how invisible attribute is used on buttons"
 7. Check manifest and XML ordering through the central ordering reference.
 8. Generate actionable migration guidance and scripts where useful.
 9. Recommend the next validation step.
+

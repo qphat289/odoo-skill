@@ -9,7 +9,12 @@ $ErrorActionPreference = "Stop"
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 $sourceRoot = Join-Path $repoRoot "skills"
-$skillNames = @("odoo-development", "odoo-14.0", "odoo-15.0", "odoo-16.0", "odoo-17.0", "odoo-18.0", "odoo-19.0")
+$skillNames = @(
+    "odoo-development",
+    "odoo-14.0", "odoo-15.0", "odoo-16.0", "odoo-17.0", "odoo-18.0", "odoo-19.0",
+    "odoo-module-generation", "odoo-models", "odoo-security", "odoo-views", "odoo-owl", "odoo-upgrade", "odoo-quality",
+    "odoo-integrations", "odoo-automation", "odoo-business-domains", "odoo-operations"
+)
 $supportFolders = @("agents", "workflows", "rules", "scripts")
 
 if ($Scope -eq "user") {

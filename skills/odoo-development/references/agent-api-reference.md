@@ -480,7 +480,7 @@ def get_migration_skills(source: str, target: str) -> list[str]:
   },
   "suggestions": [
     "Change module_name to 'invalid_name'",
-    "See input-validation-schema.md for requirements"
+    "See ../odoo-operations/references/input-validation-schema.md for requirements"
   ]
 }
 ```
@@ -489,7 +489,7 @@ def get_migration_skills(source: str, target: str) -> list[str]:
 
 | Code | Meaning | Resolution |
 |------|---------|------------|
-| `VALIDATION_ERROR` | Invalid input | Check input-validation-schema.md |
+| `VALIDATION_ERROR` | Invalid input | Check `../odoo-operations/references/input-validation-schema.md` |
 | `VERSION_ERROR` | Unsupported version | Use 14.0-19.0 |
 | `FILE_ERROR` | Cannot read/write file | Check permissions |
 | `PATTERN_ERROR` | Invalid code pattern | See troubleshooting guide |
@@ -524,7 +524,7 @@ VERSION_BRANCHES = {
     "16.0": "16.0",
     "17.0": "17.0",
     "18.0": "18.0",
-    "19.0": "master",  # Development branch
+    "19.0": "19.0",
 }
 ```
 

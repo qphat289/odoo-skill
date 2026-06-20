@@ -5,9 +5,13 @@ Reusable Odoo skill pack for Codex, Claude Code, and other coding agents.
 ## What this repo is
 
 - `skills/odoo-development/`
-  - Shared Odoo router and bundled reference base.
+  - Shared Odoo router.
 - `skills/odoo-14.0/` through `skills/odoo-19.0/`
   - Version-specific Odoo skill packs.
+- `skills/odoo-module-generation/`, `skills/odoo-models/`, `skills/odoo-security/`, `skills/odoo-views/`, `skills/odoo-owl/`, `skills/odoo-upgrade/`, `skills/odoo-quality/`
+  - Core engineering domain skills.
+- `skills/odoo-integrations/`, `skills/odoo-automation/`, `skills/odoo-business-domains/`, `skills/odoo-operations/`
+  - Extended domain skills that hold the main reusable references.
 - `agents/`
   - Reusable subagent prompts for planning, review, testing, upgrade analysis, and context gathering.
 - `workflows/`
@@ -22,7 +26,7 @@ Reusable Odoo skill pack for Codex, Claude Code, and other coding agents.
 ## Design goals
 
 - Keep `skills/` clean: only native skill folders.
-- Keep the Odoo knowledge base self-contained under the skill.
+- Keep the Odoo knowledge base split into discoverable domain skills.
 - Let another agent read `SETUP.md` and install this pack without guessing paths.
 - Support both project-scoped installs and user-scoped installs.
 - Keep shared `agents/`, `workflows/`, `rules/`, and `scripts/` adjacent to the installed skill root because the packaged skills reference them directly.
@@ -41,6 +45,17 @@ skills/
     SKILL.md
     agents/openai.yaml
     references/
+  odoo-module-generation/
+  odoo-models/
+  odoo-security/
+  odoo-views/
+  odoo-owl/
+  odoo-upgrade/
+  odoo-quality/
+  odoo-integrations/
+  odoo-automation/
+  odoo-business-domains/
+  odoo-operations/
 rules/
 agents/
 workflows/
@@ -50,7 +65,8 @@ scripts/
 ## Design standard
 
 - `skills/` contains only native skill folders.
-- Shared knowledge lives inside the shared router skill, not in loose root docs.
+- Shared knowledge is split into domain skills instead of one oversized central pack.
+- `skills/odoo-development/references/` is reserved for router and skill-authoring references, not the main execution knowledge base.
 - `agents/`, `workflows/`, and `rules/` stay runtime-agnostic and can be reused by different hosts.
 - `scripts/install_skill_pack.py` is the platform-neutral installer contract.
 

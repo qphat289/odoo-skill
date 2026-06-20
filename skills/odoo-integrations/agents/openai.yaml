@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Integrations"
+  short_description: "Controllers, APIs, import/export, website, and attachment patterns"
+  default_prompt: "Use the Odoo integrations skill for controllers, APIs, import/export, website, and attachment work."
+policy:
+  allow_implicit_invocation: true

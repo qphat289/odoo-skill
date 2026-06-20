@@ -98,12 +98,21 @@ What Odoo version should I target?
 Based on the version, load the appropriate skill file:
 
 ```
-Read: skills/odoo-development/references/odoo-module-generator-{version}.md
+Read: skills/odoo-module-generation/references/odoo-module-generator-{version}.md
+```
+
+Then load the smallest extra domain skills that match the requested feature:
+
+```
+Controllers / API / website -> skills/odoo-integrations/SKILL.md
+Cron / notifications / sequences -> skills/odoo-automation/SKILL.md
+Business app semantics -> skills/odoo-business-domains/SKILL.md
+Settings / validation / diagnostics -> skills/odoo-operations/SKILL.md
 ```
 
 For example, for Odoo 18.0:
 ```
-Read: skills/odoo-development/references/odoo-module-generator-18.md
+Read: skills/odoo-module-generation/references/odoo-module-generator-18.md
 ```
 
 ### Step 3: Gather Module Information
@@ -205,12 +214,14 @@ Generate files in the current working directory:
      against modules, models, or files the agent will examine. See "NO PARALLEL EXPLORATION".
    - Wait for the agent's report before any further file inspection.
 3. **THEN**: Load the version-specific module generator skill
-4. **GATHER**: Required information from user
-5. **GENERATE**: Version-appropriate code using patterns from context gatherer
-6. **VERIFY**: Code follows version-specific patterns
-7. **OUTPUT**: Complete module structure
+4. **ROUTE**: Load only the extra domain skills the feature actually needs
+5. **GATHER**: Required information from user
+6. **GENERATE**: Version-appropriate code using patterns from context gatherer
+7. **VERIFY**: Code follows version-specific patterns
+8. **OUTPUT**: Complete module structure
 
 **CRITICAL**: Step 2 is MANDATORY. NEVER skip the context gatherer agent invocation,
 and NEVER duplicate its work with parallel file exploration.
+
 
 

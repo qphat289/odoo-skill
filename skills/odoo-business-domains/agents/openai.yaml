@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Business Domains"
+  short_description: "Sales, stock, accounting, HR, pricing, project, and procurement patterns"
+  default_prompt: "Use the Odoo business domains skill for sales, stock, accounting, HR, pricing, project, and procurement flows."
+policy:
+  allow_implicit_invocation: true

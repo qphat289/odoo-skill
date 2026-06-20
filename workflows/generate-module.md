@@ -41,7 +41,7 @@ defaults = {
 # ACTION: If odoo_version not specified, ask user directly
 if not input_data.get("odoo_version"):
     # Ask: "Which Odoo version are you targeting?"
-    # Options: ["18.0 (Recommended)", "17.0", "16.0", "15.0", "14.0", "19.0 (Development)"]
+    # Options: ["18.0 (Recommended)", "17.0", "16.0", "15.0", "14.0", "19.0"]
     pass
 ```
 
@@ -53,19 +53,55 @@ Before writing code, read the required matching Odoo version skill files.
 version = input_data["odoo_version"].replace(".0", "")  # "18.0" -> "18"
 
 required_skills = [
-    f"skills/odoo-development/references/odoo-module-generator-{version}.md",
-    f"skills/odoo-development/references/odoo-model-patterns-{version}.md",
-    f"skills/odoo-development/references/odoo-security-guide-{version}.md",
+    f"skills/odoo-module-generation/references/odoo-module-generator-{version}.md",
+    "skills/odoo-module-generation/references/xml-data-loading-patterns.md",
+    f"skills/odoo-models/references/odoo-model-patterns-{version}.md",
+    f"skills/odoo-security/references/odoo-security-guide-{version}.md",
 ]
 
 if input_data.get("ui_stack") in ["owl", "hybrid"]:
-    required_skills.append(f"skills/odoo-development/references/odoo-owl-components-{version}.md")
+    required_skills.append(f"skills/odoo-owl/references/odoo-owl-components-{version}.md")
+
+if input_data.get("controllers") or input_data.get("external_api") or input_data.get("website"):
+    required_skills.extend([
+        "skills/odoo-integrations/references/controller-api-patterns.md",
+        "skills/odoo-integrations/references/import-export-patterns.md",
+    ])
+    if version in ["17", "18", "19"]:
+        required_skills.append(
+            f"skills/odoo-integrations/references/api-version-notes-{version}.md"
+        )
+
+if input_data.get("scheduled_actions") or input_data.get("mail_flow") or input_data.get("sequences"):
+    required_skills.extend([
+        "skills/odoo-automation/references/cron-automation-patterns.md",
+        "skills/odoo-automation/references/mail-notification-patterns.md",
+        "skills/odoo-operations/references/transaction-safety-patterns.md",
+    ])
+
+if input_data.get("portal") or input_data.get("chatter") or input_data.get("activities") or input_data.get("rating"):
+    required_skills.append("skills/odoo-models/references/mixin-composition-patterns.md")
+
+if any(app in input_data.get("target_apps", []) for app in ["sale", "crm", "purchase", "stock", "account", "hr", "project"]):
+    required_skills.append("skills/odoo-business-domains/references/sale-crm-patterns.md")
+
+if input_data.get("settings_ui") or input_data.get("enterprise_scope") or input_data.get("strict_validation"):
+    required_skills.extend([
+        "skills/odoo-operations/references/config-settings-patterns.md",
+        "skills/odoo-operations/references/input-validation-schema.md",
+    ])
+
+if input_data.get("raw_sql") or input_data.get("batch_job"):
+    required_skills.append("skills/odoo-operations/references/transaction-safety-patterns.md")
 
 if input_data.get("performance_critical"):
-    required_skills.append("skills/odoo-development/references/odoo-performance-guide.md")
+    required_skills.append("skills/odoo-quality/references/odoo-performance-guide.md")
 
 if input_data.get("include_tests"):
-    required_skills.append("skills/odoo-development/references/odoo-test-patterns.md")
+    required_skills.extend([
+        "skills/odoo-quality/references/odoo-test-patterns.md",
+        "skills/odoo-quality/references/test-tooling-patterns.md",
+    ])
 
 for skill in required_skills:
     pass
@@ -151,3 +187,4 @@ for path, content in files_to_generate.items():
     full_path = f"{output_directory}/{input_data['module_name']}/{path}"
     pass
 ```
+

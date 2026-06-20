@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Views"
+  short_description: "XML views, actions, menus, reports, widgets, and QWeb"
+  default_prompt: "Use the Odoo views skill for XML views, actions, reports, and QWeb work."
+policy:
+  allow_implicit_invocation: true

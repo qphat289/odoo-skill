@@ -69,5 +69,5 @@ Do not use this agent for:
 - Security/context assumptions:
 
 ## Related References
-- `skills/odoo-development/references/{file}.md`
+- `skills/{domain-skill}/references/{file}.md`
 ```

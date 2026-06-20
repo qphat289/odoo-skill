@@ -153,9 +153,9 @@ Review each component category.
 | `security/ir.model.access.csv` | 0 |
 
 ### Sources Consulted
-- `skills/odoo-development/references/odoo-version-routing.md`
-- `skills/odoo-development/references/odoo-version-knowledge-{version}.md`
-- `skills/odoo-development/references/odoo-manifest-data-order.md`
+- `skills/odoo-upgrade/references/odoo-version-routing.md`
+- `skills/odoo-upgrade/references/odoo-version-knowledge-{version}.md`
+- `skills/odoo-module-generation/references/odoo-manifest-data-order.md`
 - `rules/security.md`
 - `rules/coding-style.md`
 
@@ -168,9 +168,9 @@ Review each component category.
 Do not maintain a duplicated version rule table in this agent. Review criteria must come from:
 
 - the matching version skill `skills/odoo-14.0/` through `skills/odoo-19.0/`
-- `skills/odoo-development/references/odoo-version-routing.md`
-- `skills/odoo-development/references/odoo-version-knowledge-{version}.md`
-- `skills/odoo-development/references/odoo-manifest-data-order.md`
+- `skills/odoo-upgrade/references/odoo-version-routing.md`
+- `skills/odoo-upgrade/references/odoo-version-knowledge-{version}.md`
+- `skills/odoo-module-generation/references/odoo-manifest-data-order.md`
 - `rules/security.md`
 - `rules/coding-style.md`
 
@@ -187,7 +187,7 @@ When uncertain about patterns, verify against official Odoo repository using Web
 | 16.0 | `https://github.com/odoo/odoo/tree/16.0` |
 | 17.0 | `https://github.com/odoo/odoo/tree/17.0` |
 | 18.0 | `https://github.com/odoo/odoo/tree/18.0` |
-| 19.0 | `https://github.com/odoo/odoo/tree/master` |
+| 19.0 | `https://github.com/odoo/odoo/tree/19.0` |
 
 ### Key reference files
 
@@ -231,3 +231,4 @@ When uncertain about patterns, verify against official Odoo repository using Web
 5. Provide specific file:line references.
 6. Suggest version-appropriate fixes.
 7. Verify patterns against official sources when needed.
+

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Models"
+  short_description: "ORM, fields, compute logic, inheritance, and CRUD patterns"
+  default_prompt: "Use the Odoo models skill for ORM, fields, compute methods, and model logic."
+policy:
+  allow_implicit_invocation: true

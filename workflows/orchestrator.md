@@ -26,8 +26,8 @@ Do not keep version syntax tables in this orchestrator. After version detection:
 
 1. Load the matching version skill `skills/odoo-14.0/` through `skills/odoo-19.0/`.
 2. Load the relevant workflow.
-3. Load `skills/odoo-development/references/odoo-version-routing.md`.
-4. Load `skills/odoo-development/references/odoo-manifest-data-order.md` when file ordering or XML references matter.
+3. Load `skills/odoo-upgrade/references/odoo-version-routing.md`.
+4. Load `skills/odoo-module-generation/references/odoo-manifest-data-order.md` when file ordering or XML references matter.
 5. Load `rules/security.md` and `rules/coding-style.md`.
 6. Load only the references needed for the task.
 
@@ -110,3 +110,4 @@ AGENT WORKFLOW:
 5. Validate: All checks pass
 6. Output: Complete module with file tree and version notes
 ```
+

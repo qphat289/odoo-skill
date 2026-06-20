@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Security"
+  short_description: "ACL, record rules, groups, multi-company, and security checks"
+  default_prompt: "Use the Odoo security skill for access rights, record rules, and security review."
+policy:
+  allow_implicit_invocation: true

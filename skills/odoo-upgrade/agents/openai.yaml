@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Upgrade"
+  short_description: "Version deltas, migrations, troubleshooting, and upgrade planning"
+  default_prompt: "Use the Odoo upgrade skill for migration planning and version-specific troubleshooting."
+policy:
+  allow_implicit_invocation: true
