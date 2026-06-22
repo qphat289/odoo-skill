@@ -8,16 +8,27 @@ If you are an AI agent asked to install this Odoo pack for a user, do not improv
 
 Install the packaged Odoo skills into the user's preferred runtime with the correct combination of native skill discovery and adjacent support folders.
 
+## Expected outcome
+
+At the end of setup, the installing agent should be able to tell the user:
+
+- whether the host uses native skills or project instructions
+- whether the host-specific wrapper points back to `AGENTS.md`
+- the exact path or instruction file that was configured
+- what support folders were placed next to the skill root, if any
+- one smoke-test prompt the user can run immediately
+
 ## Source of truth
 
 - Shared router skill: `skills/odoo-development/`
 - Version skills: `skills/odoo-14.0/`, `skills/odoo-15.0/`, `skills/odoo-16.0/`, `skills/odoo-17.0/`, `skills/odoo-18.0/`, `skills/odoo-19.0/`
 - Domain skills: `skills/odoo-module-generation/`, `skills/odoo-models/`, `skills/odoo-security/`, `skills/odoo-views/`, `skills/odoo-owl/`, `skills/odoo-upgrade/`, `skills/odoo-quality/`
-- Extended domain skills: `skills/odoo-integrations/`, `skills/odoo-automation/`, `skills/odoo-business-domains/`, `skills/odoo-operations/`
+- Extended domain skills: `skills/odoo-integrations/`, `skills/odoo-automation/`, `skills/odoo-business-domains/`, `skills/odoo-operations/`, `skills/odoo-presales/`
 - Skill metadata: `skills/odoo-development/agents/openai.yaml`
 - Shared workflows: `workflows/`
 - Shared helper prompts: `agents/`
 - Shared cross-version rules: `rules/`
+- Correction log: `docs/correct-log/CORRECTIONS_LOG.md`
 - Generic installer: `scripts/install_skill_pack.py`
 - Platform wrappers: `scripts/install_for_claude.ps1`, `scripts/install_for_codex.ps1`
 - Version detector: `scripts/detect_odoo_version.py`
@@ -104,6 +115,40 @@ powershell -ExecutionPolicy Bypass -File scripts/install_for_codex.ps1 -Scope us
 
 For these hosts, do not claim native skill installation unless their current documentation explicitly supports a matching skill root. The safe default is project-instruction mode: keep this repository available in the workspace, then follow the host-specific instruction file above.
 
+In this repository, host-specific instruction files should stay thin and point back to `AGENTS.md` for the canonical workflow.
+`hermes-agent.json` and `openclaw-agent.json` should also use `AGENTS.md` as their primary repository instruction file.
+
+## Prompt templates
+
+Use these prompts when another agent is doing the setup work.
+
+### Generic installer prompt
+
+```text
+Use SETUP.md from this repository and set up the Odoo skill pack for my runtime.
+Detect whether my runtime supports native skills or only project instructions.
+Prefer project-scoped setup unless I ask for user-scoped reuse.
+Do not invent unverified auto-discovery behavior.
+When done, tell me the exact path or instruction file used and give me one smoke-test prompt.
+```
+
+### Native-skill host prompt
+
+```text
+Use SETUP.md and install this Odoo skill pack into the native skill location for my runtime.
+Prefer project or repo scope unless I explicitly ask for a user-wide install.
+Validate the source layout before install and confirm the destination after install.
+Then give me one smoke-test prompt.
+```
+
+### Project-instruction host prompt
+
+```text
+Use SETUP.md and configure this repository in project-instruction mode for my runtime.
+Do not claim a native skill install unless it is verified by the runtime documentation.
+Tell me the exact instruction file I should use and give me one smoke-test prompt.
+```
+
 ## Agent procedure
 
 When a user says "use SETUP.md and install this Odoo pack for my IDE", follow this exact procedure:
@@ -121,6 +166,16 @@ When a user says "use SETUP.md and install this Odoo pack for my IDE", follow th
 11. Tell the user the exact discovery path or project instruction file that was populated.
 12. Give the user one smoke-test prompt.
 
+## Agent response contract
+
+After installation, report results in this shape:
+
+1. `Mode:` native skill install or project-instruction mode
+2. `Target:` exact path or exact instruction file used
+3. `Scope:` project, repo, or user
+4. `Validated:` whether `python scripts/validate_layout.py` passed before install
+5. `Smoke test:` one short prompt the user can run immediately
+
 ## Validation criteria
 
 An installation is correct only if all of the following are true:
@@ -130,6 +185,7 @@ An installation is correct only if all of the following are true:
 - Destination folder contains the core and extended domain skills listed above
 - Shared router skill contains only router and authoring references
 - Adjacent support folders exist for `agents/`, `workflows/`, `rules/`, and `scripts/`
+- `docs/correct-log/CORRECTIONS_LOG.md` exists for repository maintenance and feedback-loop work
 - Root skill repo still validates with `python scripts/validate_layout.py`
 - The runtime-specific discovery path matches the matrix above
 
@@ -140,6 +196,7 @@ Use one of these after install:
 - "Use the Odoo development skill and review this addon for Odoo 18 security issues."
 - "Use the Odoo development skill and scaffold a new Odoo 18 module with one model and access rights."
 - "Use the Odoo development skill and tell me which reference file to load for OWL work in Odoo 19."
+- "Use the Odoo presales skill and turn these discovery notes into a fit-gap table."
 
 ## Notes
 

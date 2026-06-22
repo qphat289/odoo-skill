@@ -1,6 +1,6 @@
 {
   "name": "odoo-development-extension",
-  "description": "Gemini extension for Odoo Development. Injects Odoo code patterns, agents, and test scripts into the model context.",
+  "description": "Gemini extension for Odoo Development. GEMINI.md remains the host wrapper, AGENTS.md remains the canonical repository instruction, and SKILL.md remains the packaged skill router.",
   "version": "1.0.0",
   "skills": {
     "path": "./skills",
@@ -11,9 +11,6 @@
   },
   "agents": {
     "path": "./agents"
-  },
-  "commands": {
-    "path": "./commands"
   },
   "scripts": {
     "path": "./scripts"

@@ -2,18 +2,17 @@
 
 Use this repository in Windsurf as a project-instruction workspace, not as an assumed native skill registry.
 
-## Required workflow
+## Canonical instruction
 
-1. Detect or confirm the target Odoo version before writing code.
-2. Read `SKILL.md`.
-3. Read `skills/odoo-development/SKILL.md`.
-4. Switch to the matching version skill when the version is known.
-5. Read the relevant file from `workflows/`.
-6. Read only the needed references from `skills/odoo-development/references/`.
-7. Read `rules/security.md` and `rules/coding-style.md` when generating, reviewing, or upgrading code.
-8. Read the relevant helper prompt from `agents/` when needed.
-9. Verify uncertain syntax against official Odoo documentation or official Odoo source.
-10. Validate security, manifest order, and tests before finishing.
+1. Read `AGENTS.md` and use it as the canonical repository instruction file.
+
+## Host note
+
+2. Do not assume `skills/`, `agents/`, `workflows/`, or `rules/` are auto-registered native Windsurf features.
+
+## Setup note
+
+3. Use `SETUP.md` only when the task is installation or runtime configuration.
 
 ## Tool mapping
 
@@ -22,12 +21,3 @@ Use this repository in Windsurf as a project-instruction workspace, not as an as
 - `Grep <pattern>` -> Windsurf search.
 - `WebFetch` and `WebSearch` -> browser or terminal tools.
 - `command <cmd>` -> integrated terminal.
-
-## Odoo rules
-
-- Never guess the Odoo version if the manifest is missing or unclear.
-- For Odoo 17+, use direct XML attributes instead of `attrs`.
-- For Odoo 16+, use `Command` for x2many operations.
-- For Odoo 17+, use `@api.model_create_multi` for `create()`.
-- For Odoo 18+, use `_check_company_auto = True`, `check_company=True`, and `allowed_company_ids` where applicable.
-- Every model needs access rights in `security/ir.model.access.csv`.

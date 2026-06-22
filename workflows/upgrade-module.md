@@ -1,110 +1,62 @@
 # WORKFLOW: Upgrade Module
 
-This workflow guides the AI agent through upgrading a module from a source Odoo version to a target Odoo version.
+## Purpose
 
-## Overview
+Guide the agent through upgrading an Odoo module from one version to another with hop-aware analysis and transformation planning.
 
-```text
-Source -> Target -> Calculate Path -> Load Migrations -> Transform -> Validate
-```
+## When to use
 
----
+Use this workflow for migration, version-hop refactoring, or upgrade impact analysis.
 
-## Step-by-Step Execution
+## Inputs
 
-### STEP 1: Determine Migration Path
+- module path
+- source Odoo version
+- target Odoo version
 
-Specify the upgrade hops necessary to reach the target Odoo version.
+## Required reads
 
-```python
-source_version = "16.0"
-target_version = "18.0"
+- `skills/odoo-upgrade/references/odoo-version-knowledge-{source}-{target}.md`
+- `skills/odoo-module-generation/references/odoo-module-generator-{source}-{target}.md`
+- `skills/odoo-models/references/odoo-model-patterns-{source}-{target}.md`
+- `skills/odoo-security/references/odoo-security-guide-{source}-{target}.md`
+- `rules/security.md`
+- `rules/coding-style.md`
 
-migration_path = calculate_path(source_version, target_version)
-# Result: ["16.0", "17.0", "18.0"]
+## Optional reads
 
-hops = [
-    ("16", "17"),  # attrs removal, create_multi required
-    ("17", "18"),  # _check_company_auto, SQL() builder
-]
-```
+- `skills/odoo-owl/references/odoo-owl-components-{source}-{target}.md`
+- `skills/odoo-integrations/references/controller-api-patterns.md`
+- `skills/odoo-automation/references/cron-automation-patterns.md`
+- `skills/odoo-operations/references/config-settings-patterns.md`
+- `agents/odoo-upgrade-analyzer.md`
 
-### STEP 2: Load Migration Skills
+## Steps
 
-Read migration-specific guides to prevent syntax issues.
+1. Confirm source and target versions.
+2. Calculate the migration hops if the upgrade spans more than one major version.
+3. Invoke `agents/odoo-upgrade-analyzer.md` when the migration is broad or risky.
+4. Load the required cross-version references for each hop.
+5. Load optional references only when the module uses frontend, controllers, automation, or operational features.
+6. Identify required transformations for each hop.
+7. Decide which changes are:
+   - automatic
+   - manual but straightforward
+   - risky and requiring upstream verification
+8. Generate migration notes and scripts when appropriate.
+9. Validate the final module state against the target version.
 
-```python
-for source, target in hops:
-    skills_to_load = [
-        f"skills/odoo-module-generation/references/odoo-module-generator-{source}-{target}.md",
-        f"skills/odoo-models/references/odoo-model-patterns-{source}-{target}.md",
-        f"skills/odoo-security/references/odoo-security-guide-{source}-{target}.md",
-        f"skills/odoo-upgrade/references/odoo-version-knowledge-{source}-{target}.md",
-    ]
+## Outputs
 
-    if has_owl_components(module_path):
-        skills_to_load.append(f"skills/odoo-owl/references/odoo-owl-components-{source}-{target}.md")
+- required upgrade fixes
+- recommended cleanups
+- migration-script notes
+- manual verification list
 
-    if has_controllers_or_external_api(module_path):
-        skills_to_load.append("skills/odoo-integrations/references/controller-api-patterns.md")
+## Validation gates
 
-    if has_cron_or_mail_flows(module_path):
-        skills_to_load.append("skills/odoo-automation/references/cron-automation-patterns.md")
-
-    if has_config_or_operational_logic(module_path):
-        skills_to_load.append("skills/odoo-operations/references/config-settings-patterns.md")
-```
-
-### STEP 3: Apply Transformations
-
-Apply regex or structural transformations to files.
-
-```python
-transformations = []
-
-for source, target in hops:
-    if (source, target) == ("16", "17"):
-        transformations.extend([
-            transform_create_to_create_multi,
-            transform_attrs_to_inline,
-        ])
-    elif (source, target) == ("17", "18"):
-        transformations.extend([
-            add_check_company_auto,
-            add_check_company_fields,
-            transform_sql_to_builder,
-            add_type_hints,
-        ])
-
-for transform in transformations:
-    files = transform(module_files)
-```
-
-### STEP 4: Generate Migration Scripts
-
-Set up Odoo pre/post migration SQL and data scripts.
-
-```python
-migration_files = {
-    f"migrations/{target_version}.1.0.0/pre-migration.py": generate_pre_migration(),
-    f"migrations/{target_version}.1.0.0/post-migration.py": generate_post_migration(),
-}
-```
-
-### STEP 5: Output Upgraded Module
-
-Verify modifications and output details.
-
-```python
-output = {
-    "status": "success",
-    "source_version": source_version,
-    "target_version": target_version,
-    "migration_path": migration_path,
-    "updated_files": updated_files,
-    "migration_scripts": migration_files,
-    "breaking_changes": list_breaking_changes(hops),
-    "manual_review_required": list_manual_items(),
-}
-```
+- every source-target hop is accounted for
+- target-version syntax and semantics are checked explicitly
+- risky assumptions are marked for verification, not presented as facts
+- migration output separates mandatory fixes from optional cleanup
 

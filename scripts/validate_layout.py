@@ -18,6 +18,7 @@ def main() -> None:
         REPO_ROOT / "SETUP.md",
         REPO_ROOT / "AGENTS.md",
         REPO_ROOT / "CLAUDE.md",
+        REPO_ROOT / "docs" / "correct-log" / "CORRECTIONS_LOG.md",
         REPO_ROOT / "workflows",
         REPO_ROOT / "agents",
         REPO_ROOT / "rules",
@@ -61,6 +62,8 @@ def main() -> None:
         REPO_ROOT / "skills" / "odoo-business-domains" / "agents" / "openai.yaml",
         REPO_ROOT / "skills" / "odoo-operations" / "SKILL.md",
         REPO_ROOT / "skills" / "odoo-operations" / "agents" / "openai.yaml",
+        REPO_ROOT / "skills" / "odoo-presales" / "SKILL.md",
+        REPO_ROOT / "skills" / "odoo-presales" / "agents" / "openai.yaml",
     ]
 
     for path in required_paths:

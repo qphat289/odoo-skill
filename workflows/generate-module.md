@@ -1,190 +1,81 @@
 # WORKFLOW: Generate Module
 
-This workflow guides the AI agent through parsing requirements, loading the target Odoo version patterns, generating consistent module files, and validating the generated output.
+## Purpose
 
-## Overview
+Guide the agent through generating a new Odoo module or a substantial new feature set with version-correct structure and validation.
 
-```text
-Input -> Validate -> Load Skills -> Generate Files -> Verify -> Output
-```
+## When to use
 
----
+Use this workflow for scaffolding a module, adding a major feature, or generating a clean implementation baseline from requirements.
 
-## Step-by-Step Execution
+## Inputs
 
-### STEP 1: Parse and Validate Input
+- module name
+- module description
+- target Odoo version
+- target apps or business area
+- UI stack if relevant
+- security level
+- whether tests, automation, integrations, or OWL are needed
 
-Extract module specifications from the user request. Prompt for missing details if necessary.
+## Required reads
 
-```python
-# REQUIRED: Extract these from user request
-input_data = {
-    "module_name": "",           # REQUIRED - lowercase, underscores only
-    "module_description": "",    # REQUIRED - min 10 chars
-    "odoo_version": "",          # REQUIRED - 14.0/15.0/16.0/17.0/18.0/19.0
-}
+- `skills/odoo-module-generation/references/odoo-module-generator-{version}.md`
+- `skills/odoo-module-generation/references/xml-data-loading-patterns.md`
+- `skills/odoo-models/references/odoo-model-patterns-{version}.md`
+- `skills/odoo-security/references/odoo-security-guide-{version}.md`
+- `skills/odoo-quality/references/common-bug-patterns.md`
+- `rules/security.md`
+- `rules/coding-style.md`
 
-# OPTIONAL: Apply defaults if not specified
-defaults = {
-    "target_apps": [],
-    "ui_stack": "classic",       # classic/owl/hybrid
-    "multi_company": False,
-    "multi_currency": False,
-    "security_level": "basic",   # basic/advanced/audit
-    "performance_critical": False,
-    "include_tests": True,
-    "include_demo": False,
-    "models": [],
-    "inherit_models": [],
-}
+## Optional reads
 
-# ACTION: If odoo_version not specified, ask user directly
-if not input_data.get("odoo_version"):
-    # Ask: "Which Odoo version are you targeting?"
-    # Options: ["18.0 (Recommended)", "17.0", "16.0", "15.0", "14.0", "19.0"]
-    pass
-```
+- `skills/odoo-owl/references/odoo-owl-components-{version}.md`
+- `skills/odoo-integrations/references/controller-api-patterns.md`
+- `skills/odoo-integrations/references/import-export-patterns.md`
+- `skills/odoo-integrations/references/api-version-notes-{version}.md`
+- `skills/odoo-automation/references/cron-automation-patterns.md`
+- `skills/odoo-automation/references/mail-notification-patterns.md`
+- `skills/odoo-models/references/mixin-composition-patterns.md`
+- `skills/odoo-business-domains/references/sale-crm-patterns.md`
+- `skills/odoo-operations/references/config-settings-patterns.md`
+- `skills/odoo-operations/references/input-validation-schema.md`
+- `skills/odoo-operations/references/transaction-safety-patterns.md`
+- `skills/odoo-quality/references/odoo-performance-guide.md`
+- `skills/odoo-models/references/advanced-orm-performance-patterns.md`
+- `skills/odoo-quality/references/odoo-test-patterns.md`
+- `skills/odoo-quality/references/test-tooling-patterns.md`
+- `agents/odoo-context-gatherer.md`
 
-### STEP 2: Load Version-Specific Skills
+## Steps
 
-Before writing code, read the required matching Odoo version skill files.
+1. Validate the required inputs.
+2. If the version is missing, stop and confirm it.
+3. Invoke `agents/odoo-context-gatherer.md` before generating code when surrounding project context matters.
+4. Load the required version-specific module, model, security, and common bug references.
+5. Translate relevant common bug patterns into a short pre-build checklist for this module.
+6. Load only the optional domain references that match the requested feature set.
+7. Generate the module structure in dependency-safe order:
+   - manifest and package init
+   - models
+   - security
+   - views and menus
+   - assets or OWL components if needed
+   - tests if included
+8. Verify uncertain syntax against official Odoo sources when the version or pattern is sensitive.
+9. Validate manifest ordering, syntax, security baseline, version compliance, and common bug avoidance.
 
-```python
-version = input_data["odoo_version"].replace(".0", "")  # "18.0" -> "18"
+## Outputs
 
-required_skills = [
-    f"skills/odoo-module-generation/references/odoo-module-generator-{version}.md",
-    "skills/odoo-module-generation/references/xml-data-loading-patterns.md",
-    f"skills/odoo-models/references/odoo-model-patterns-{version}.md",
-    f"skills/odoo-security/references/odoo-security-guide-{version}.md",
-]
+- generated module file tree
+- version-sensitive implementation notes
+- validation summary
 
-if input_data.get("ui_stack") in ["owl", "hybrid"]:
-    required_skills.append(f"skills/odoo-owl/references/odoo-owl-components-{version}.md")
+## Validation gates
 
-if input_data.get("controllers") or input_data.get("external_api") or input_data.get("website"):
-    required_skills.extend([
-        "skills/odoo-integrations/references/controller-api-patterns.md",
-        "skills/odoo-integrations/references/import-export-patterns.md",
-    ])
-    if version in ["17", "18", "19"]:
-        required_skills.append(
-            f"skills/odoo-integrations/references/api-version-notes-{version}.md"
-        )
-
-if input_data.get("scheduled_actions") or input_data.get("mail_flow") or input_data.get("sequences"):
-    required_skills.extend([
-        "skills/odoo-automation/references/cron-automation-patterns.md",
-        "skills/odoo-automation/references/mail-notification-patterns.md",
-        "skills/odoo-operations/references/transaction-safety-patterns.md",
-    ])
-
-if input_data.get("portal") or input_data.get("chatter") or input_data.get("activities") or input_data.get("rating"):
-    required_skills.append("skills/odoo-models/references/mixin-composition-patterns.md")
-
-if any(app in input_data.get("target_apps", []) for app in ["sale", "crm", "purchase", "stock", "account", "hr", "project"]):
-    required_skills.append("skills/odoo-business-domains/references/sale-crm-patterns.md")
-
-if input_data.get("settings_ui") or input_data.get("enterprise_scope") or input_data.get("strict_validation"):
-    required_skills.extend([
-        "skills/odoo-operations/references/config-settings-patterns.md",
-        "skills/odoo-operations/references/input-validation-schema.md",
-    ])
-
-if input_data.get("raw_sql") or input_data.get("batch_job"):
-    required_skills.append("skills/odoo-operations/references/transaction-safety-patterns.md")
-
-if input_data.get("performance_critical"):
-    required_skills.append("skills/odoo-quality/references/odoo-performance-guide.md")
-
-if input_data.get("include_tests"):
-    required_skills.extend([
-        "skills/odoo-quality/references/odoo-test-patterns.md",
-        "skills/odoo-quality/references/test-tooling-patterns.md",
-    ])
-
-for skill in required_skills:
-    pass
-
-shared_rules = [
-    "rules/security.md",
-    "rules/coding-style.md",
-]
-```
-
-### STEP 3: Verify Patterns Against GitHub
-
-When uncertain about specific Odoo core syntax, query the official Odoo GitHub repository.
-
-```python
-if version >= "17":
-    # Verify @api.model_create_multi usage
-    pass
-
-if version >= "18":
-    # Verify _check_company_auto pattern
-    pass
-
-# Verify view syntax (attrs vs invisible)
-```
-
-### STEP 4: Generate Module Files
-
-Generate files in a strict dependency-safe order. This is critical for the `data` loading sequence in the module manifest.
-
-```python
-files_to_generate = {
-    "__manifest__.py": generate_manifest(input_data),
-    "__init__.py": generate_root_init(input_data),
-    "models/__init__.py": generate_models_init(input_data),
-    "security/{module}_security.xml": generate_security_groups(input_data),
-    "security/ir.model.access.csv": generate_access_rights(input_data),
-    "views/menuitems.xml": generate_menus(input_data),
-}
-```
-
-### STEP 5: Validate Generated Code
-
-Perform automated lint checks on the generated code before outputting.
-
-```python
-validations = {
-    "manifest_data_order": check_data_file_order(manifest),
-    "security_before_views": check_security_first(manifest),
-    "python_syntax": check_python_syntax(python_files),
-    "xml_syntax": check_xml_syntax(xml_files),
-    "version_patterns": check_version_compliance(files, version),
-}
-
-for check, result in validations.items():
-    if not result["valid"]:
-        pass
-```
-
-### STEP 6: Output Results
-
-Save code and structure. Output a summary to the user.
-
-```python
-output = {
-    "status": "success",
-    "module_name": input_data["module_name"],
-    "odoo_version": input_data["odoo_version"],
-    "files": files_to_generate,
-    "file_tree": generate_file_tree(files_to_generate),
-    "version_notes": collect_version_notes(version),
-    "warnings": collect_warnings(),
-    "github_verified": True,
-    "manifest_data_order": [
-        "security/{module}_security.xml",
-        "security/ir.model.access.csv",
-        "views/{model}_views.xml",
-        "views/menuitems.xml",
-    ],
-}
-
-for path, content in files_to_generate.items():
-    full_path = f"{output_directory}/{input_data['module_name']}/{path}"
-    pass
-```
-
+- module name is valid and version is confirmed
+- security files load before views and menus
+- generated patterns match the target version
+- every persistent model has ACL coverage
+- relevant repeat-bug checks were applied before file generation
+- non-trivial logic has at least a test recommendation, or tests are generated when requested

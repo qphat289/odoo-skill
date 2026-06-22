@@ -1,7 +1,7 @@
 {
   "agent_id": "odoo-developer",
   "name": "Odoo Development Agent",
-  "system_instructions_file": "./SKILL.md",
+  "system_instructions_file": "./AGENTS.md",
   "skills_directory": "./skills",
   "workflows_directory": "./workflows",
   "agents_directory": "./agents",

@@ -3,8 +3,9 @@
   "agent_profile": {
     "name": "Odoo Development Specialist",
     "role": "Odoo developer and QA tester",
-    "primary_instruction": "./SKILL.md",
+    "primary_instruction": "./AGENTS.md",
     "context_sources": [
+      "./SKILL.md",
       "./skills",
       "./workflows",
       "./agents",

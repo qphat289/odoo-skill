@@ -29,6 +29,7 @@ Use this skill as the top-level router for the Odoo pack. Once the version and d
    - `../odoo-automation/SKILL.md`
    - `../odoo-business-domains/SKILL.md`
    - `../odoo-operations/SKILL.md`
+   - `../odoo-presales/SKILL.md`
 4. Read the matching workflow in `../../workflows/`.
 5. Read only the references needed for the version and domain.
 6. Read `../../rules/security.md` and `../../rules/coding-style.md` when generating or reviewing code.
@@ -52,6 +53,7 @@ Use this skill as the top-level router for the Odoo pack. Once the version and d
 | Automation | `odoo-automation` | Cron jobs, sequences, mail, background flows |
 | Business flows | `odoo-business-domains` | Sales, stock, accounting, HR, project, pricing patterns |
 | Operations | `odoo-operations` | Settings, validation, debugging, error handling, i18n |
+| Presales and handoff | `odoo-presales` | Discovery, fit-gap, estimation, proposal, implementation handoff |
 
 ## Router-only references
 

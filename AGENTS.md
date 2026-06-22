@@ -2,16 +2,23 @@
 
 Use this repository as an Odoo skill-pack workspace.
 
+## Canonical role
+
+`AGENTS.md` is the canonical repository instruction file.
+
+Host-specific files such as `CLAUDE.md`, `GEMINI.md`, `HERMES_SETUP.md`, `.cursorrules`, `.clinerules`, `.windsurfrules`, and `.github/copilot-instructions.md` should stay thin and point back to this file instead of duplicating the full workflow.
+
 ## Meaning
 
 - `SKILL.md` is the project-mode router.
 - `skills/odoo-development/` is the canonical packaged skill.
 - `skills/odoo-14.0/` through `skills/odoo-19.0/` are version-specific skill packs.
 - `skills/odoo-module-generation/`, `skills/odoo-models/`, `skills/odoo-security/`, `skills/odoo-views/`, `skills/odoo-owl/`, `skills/odoo-upgrade/`, and `skills/odoo-quality/` are the main domain skills.
-- `skills/odoo-integrations/`, `skills/odoo-automation/`, `skills/odoo-business-domains/`, and `skills/odoo-operations/` hold specialized references that were previously crowded into the shared router.
+- `skills/odoo-integrations/`, `skills/odoo-automation/`, `skills/odoo-business-domains/`, `skills/odoo-operations/`, and `skills/odoo-presales/` hold specialized references that were previously crowded into the shared router.
 - `workflows/` contains execution playbooks.
 - `rules/` contains cross-version coding and security rules.
 - `agents/` contains optional helper prompts.
+- `docs/correct-log/` contains repository maintenance logs for recurring mistakes and corrections.
 - `scripts/` contains installer and validation helpers.
 
 ## Required workflow

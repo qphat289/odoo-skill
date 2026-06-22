@@ -1,10 +1,13 @@
 Use this repository as an Odoo skill-pack workspace.
 
-## Core rules
+## Canonical instruction
 
-1. Always detect Odoo version first.
-2. Read `SKILL.md` at root.
-3. Read `skills/odoo-development/SKILL.md`.
-4. Load only the needed references from `skills/odoo-development/references/`.
-5. Never guess version-specific syntax.
-6. Every model needs `ir.model.access.csv`.
+1. Read `AGENTS.md` and use it as the canonical repository instruction file.
+
+## Host note
+
+2. Do not assume root helper folders are auto-registered native features unless the runtime explicitly supports them.
+
+## Setup note
+
+3. When native skill installation is needed, follow `SETUP.md`.

@@ -18,6 +18,8 @@ This root file is the project-mode entrypoint for the repository.
 7. Verify uncertain syntax against official Odoo sources.
 8. Validate security, manifest order, and tests before finishing.
 
+Use `skills/odoo-presales/` before coding when the task is still about discovery, fit-gap, estimation, proposal, or business-to-implementation handoff.
+
 ## Hard rules
 
 - Never guess the Odoo version when the manifest is missing or unclear.

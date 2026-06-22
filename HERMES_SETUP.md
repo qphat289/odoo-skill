@@ -2,23 +2,21 @@
 
 This repository is designed for project-guided Odoo work in Hermes.
 
-## Integration rule
+## Canonical instruction
 
-Do not assume Hermes auto-registers every helper folder as a native feature. Treat `SKILL.md` as the entry point, then load only the referenced files you need.
+Use `AGENTS.md` as the canonical repository instruction file, then follow its workflow.
 
-## Required workflow
+## Host note
 
-1. Load `SKILL.md`.
-2. Load `skills/odoo-development/SKILL.md`.
-3. Switch to the matching version skill when the target version is known.
-4. Load the relevant file from `workflows/`.
-5. Load only the needed references from `skills/odoo-development/references/`.
-6. Load `rules/security.md` and `rules/coding-style.md` when generating, reviewing, or upgrading code.
-7. Load the relevant helper prompt from `agents/` when needed.
-8. Verify uncertain syntax against official Odoo documentation or official Odoo source.
+Do not assume Hermes auto-registers every helper folder as a native feature.
+
+## Setup note
+
+Use `SETUP.md` only when the task is installation or runtime configuration.
 
 ## File paths
 
+- `./AGENTS.md` -> canonical repository instruction file
 - `./SKILL.md` -> repository router entry point
 - `./skills/` -> packaged Odoo skills
 - `./workflows/` -> execution playbooks

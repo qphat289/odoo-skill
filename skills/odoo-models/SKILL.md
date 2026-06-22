@@ -18,6 +18,7 @@ Use this skill when the task is mainly about Python models, ORM methods, field d
 | Constraints | `references/constraint-patterns.md` | SQL and Python validation |
 | Inheritance | `references/inheritance-patterns.md` | `_inherit`, delegation, extension |
 | Mixins | `references/mixin-composition-patterns.md` | Chatter, activities, portal, alias, rating, avatars |
+| Advanced ORM performance | `references/advanced-orm-performance-patterns.md` | Prefetch, batching, `_read_group`, cache safety, query scaling |
 | Version files | `references/odoo-model-patterns-<version>.md` | Version-specific ORM patterns |
 
 ## Rules
@@ -25,3 +26,4 @@ Use this skill when the task is mainly about Python models, ORM methods, field d
 1. Load the exact version file before writing model code.
 2. Use this skill together with `odoo-security` when access rules affect the model.
 3. For XML/UI behavior, switch to `odoo-views` instead of overloading model references.
+4. When performance work touches cache, batching, or query-shape decisions, also load `references/advanced-orm-performance-patterns.md`.
