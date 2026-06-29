@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Documents"
+  short_description: "DOCX support for Odoo presales, design, and QA/QC artifacts"
+  default_prompt: "Use the Odoo documents skill when this Odoo task touches customer or delivery DOCX artifacts."
+policy:
+  allow_implicit_invocation: true

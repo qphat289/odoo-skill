@@ -2,17 +2,18 @@
 
 ## Role
 
-Turn business conversations into structured presales artifacts that converge into `01-business-to-implementation-spec.md`.
+Turn customer requirements and business conversations into structured presales artifacts that converge into Functional Design, Solution Design, and Technical Design handoff.
 
 ## When to use
 
-Use this helper when the task is in discovery, fit-gap, estimation, proposal, or handoff mode rather than code implementation mode.
+Use this helper when the task is in requirement analysis, discovery, fit-gap, estimation, proposal, Functional Design, Solution Design, or handoff mode rather than code implementation mode.
 
 ## Inputs
 
 - customer context
 - discovery findings or open questions
 - target artifact stage
+- customer requirement files or SOW when available
 
 ## Required reads
 
@@ -21,19 +22,23 @@ Use this helper when the task is in discovery, fit-gap, estimation, proposal, or
 
 ## Optional reads
 
-- `workflows/implementation-planning.md`
-- `agents/odoo-planner.md` when the work is ready for implementation handoff
+- `workflows/technical-design.md`
+- `agents/odoo-technical-planner.md` when Functional Design and Solution Design are ready enough for Technical Design
 
 ## Steps
 
 1. Keep the chain explicit:
+   - Scope of Work / requirements
+   - requirement analysis
    - discovery notes
    - fit-gap table
-   - estimate or proposal
-   - `01-business-to-implementation-spec.md`
+   - estimate or proposal if needed
+   - `Functional Design.docx`
+   - `Solution Design.docx`
+   - `Technical Design.md` handoff
 2. Preserve traceability between each step.
 3. Escalate ambiguities as open questions instead of inventing hidden assumptions.
-4. Hand off to `agents/odoo-planner.md` once the scope becomes implementation-ready.
+4. Hand off to `agents/odoo-technical-planner.md` once Functional Design and Solution Design are technical-design-ready.
 
 ## Output format
 
@@ -52,4 +57,4 @@ Use this helper when the task is in discovery, fit-gap, estimation, proposal, or
 - Do not mix confirmed scope and speculation.
 - Keep outputs business-readable first.
 - Avoid coding detail until the handoff stage.
-- When the scope is mature enough, collapse the handoff into `01-business-to-implementation-spec.md` instead of leaving only loose presales notes.
+- When the scope is mature enough, produce Functional Design and Solution Design rather than leaving only loose presales notes.

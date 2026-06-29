@@ -13,6 +13,7 @@ Use this workflow for audits, code review, regression-risk checks, or static mod
 - module path
 - target Odoo version
 - optional review focus such as security, performance, or upgrade readiness
+- optional `Project Tracking.md` when review status must be tracked
 
 ## Required reads
 
@@ -55,8 +56,9 @@ Use this workflow for audits, code review, regression-risk checks, or static mod
    - automation, controllers, and frontend if present
    - performance traps and test coverage
 7. When a bug matches a recurring pattern, name the pattern explicitly in the review notes.
-8. If a repeat-worthy bug is not already covered in the canonical references, add it to `docs/correct-log/CORRECTIONS_LOG.md` for later promotion.
+8. If a repeat-worthy bug is not already covered in the canonical references, add it to `docs/CORRECTIONS_LOG.md` for later promotion.
 9. Group findings by severity and provide actionable fixes.
+10. If `Project Tracking.md` is in use, update only the affected review/status rows with evidence from the review.
 
 ## Suggested correction-log row
 

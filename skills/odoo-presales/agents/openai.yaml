@@ -1,7 +1,7 @@
 interface:
   display_name: "Odoo Presales"
-  short_description: "Discovery, fit-gap, estimation, proposal, and implementation handoff"
-  default_prompt: "Use the Odoo presales skill for discovery, fit-gap analysis, estimation, and business-to-implementation handoff."
+  short_description: "Requirements, fit-gap, Functional Design, Solution Design, and handoff"
+  default_prompt: "Use the Odoo presales skill for requirement analysis, fit-gap analysis, Functional Design, Solution Design, estimation, and Technical Design handoff."
 policy:
   allow_implicit_invocation: true
 

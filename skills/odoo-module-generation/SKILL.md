@@ -16,6 +16,10 @@ Use this skill when the task is about creating a module, shaping the file tree, 
 | Manifest/data ordering | `references/odoo-manifest-data-order.md` | Security, data, views ordering |
 | XML and CSV data files | `references/xml-data-loading-patterns.md` | `record`, `ref`, `eval`, `noupdate`, CSV `:id` |
 | Templates | `references/common-module-templates.md` | Reusable skeletons and file stubs |
+| Technical Design | `references/technical-design-template.md` | Turn Functional Design and Solution Design into dev-ready implementation design |
+| Technical Design example | `references/technical-design-example-sale-approval.md` | See a realistic technical design that matches the QA/QC and tracking examples |
+| Project Tracking | `references/project-tracking-template.md` | Break Technical Design into phase/module/task status tracking |
+| Project Tracking example | `references/project-tracking-example-sale-approval.md` | See a realistic delivery tracker that matches a full QA/QC loop |
 | Version files | `references/odoo-module-generator-<version>.md` | Real scaffold and manifest rules per version |
 | Upgrade deltas | `references/odoo-module-generator-<from>-<to>.md` | Migration-sensitive module changes |
 

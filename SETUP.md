@@ -24,15 +24,18 @@ At the end of setup, the installing agent should be able to tell the user:
 - Version skills: `skills/odoo-14.0/`, `skills/odoo-15.0/`, `skills/odoo-16.0/`, `skills/odoo-17.0/`, `skills/odoo-18.0/`, `skills/odoo-19.0/`
 - Domain skills: `skills/odoo-module-generation/`, `skills/odoo-models/`, `skills/odoo-security/`, `skills/odoo-views/`, `skills/odoo-owl/`, `skills/odoo-upgrade/`, `skills/odoo-quality/`
 - Extended domain skills: `skills/odoo-integrations/`, `skills/odoo-automation/`, `skills/odoo-business-domains/`, `skills/odoo-operations/`, `skills/odoo-presales/`
+- Support capability skills: `skills/odoo-documents/`, `skills/odoo-spreadsheets/`
 - Skill metadata: `skills/odoo-development/agents/openai.yaml`
 - Shared workflows: `workflows/`
 - Shared helper prompts: `agents/`
 - Shared cross-version rules: `rules/`
-- Correction log: `docs/correct-log/CORRECTIONS_LOG.md`
+- Correction log: `docs/CORRECTIONS_LOG.md`
+- Harness eval log: `docs/HARNESS_EVAL_LOG.md`
+- Optimization plan: `docs/SKILL_PACK_OPTIMIZATION_PLAN.md`
 - Generic installer: `scripts/install_skill_pack.py`
 - Platform wrappers: `scripts/install_for_claude.ps1`, `scripts/install_for_codex.ps1`
 - Version detector: `scripts/detect_odoo_version.py`
-- Validator: `scripts/validate_layout.py`
+- Validators: `scripts/validate_layout.py`, `scripts/validate_skill_pack_contracts.py`, `scripts/validate_harness_evals.py`, `scripts/validate_no_stale_refs.py`
 
 ## Preflight
 
@@ -41,7 +44,12 @@ Before installing:
 1. Identify the target runtime.
 2. Identify whether the user wants project-scoped or user-scoped installation.
 3. Identify the target project path when using project scope.
-4. Run `python scripts/validate_layout.py` in this repository.
+4. Run:
+   - `python scripts/validate_layout.py`
+   - `python scripts/validate_skill_pack_contracts.py`
+   - `python scripts/validate_harness_evals.py`
+   - `python scripts/validate_no_stale_refs.py`
+   in this repository.
 5. Use `python scripts/detect_odoo_version.py` when the user also wants runtime Odoo-version detection guidance.
 6. Only then run the installer.
 
@@ -58,6 +66,9 @@ Install command:
 
 ```powershell
 python scripts/validate_layout.py
+python scripts/validate_skill_pack_contracts.py
+python scripts/validate_harness_evals.py
+python scripts/validate_no_stale_refs.py
 python scripts/install_skill_pack.py C:\path\to\skill-root --force
 ```
 
@@ -74,11 +85,17 @@ Install commands:
 
 ```powershell
 python scripts/validate_layout.py
+python scripts/validate_skill_pack_contracts.py
+python scripts/validate_harness_evals.py
+python scripts/validate_no_stale_refs.py
 powershell -ExecutionPolicy Bypass -File scripts/install_for_claude.ps1 -Scope project -TargetPath C:\path\to\target-repo
 ```
 
 ```powershell
 python scripts/validate_layout.py
+python scripts/validate_skill_pack_contracts.py
+python scripts/validate_harness_evals.py
+python scripts/validate_no_stale_refs.py
 powershell -ExecutionPolicy Bypass -File scripts/install_for_claude.ps1 -Scope user
 ```
 
@@ -95,11 +112,17 @@ Install commands:
 
 ```powershell
 python scripts/validate_layout.py
+python scripts/validate_skill_pack_contracts.py
+python scripts/validate_harness_evals.py
+python scripts/validate_no_stale_refs.py
 powershell -ExecutionPolicy Bypass -File scripts/install_for_codex.ps1 -Scope repo -TargetPath C:\path\to\target-repo
 ```
 
 ```powershell
 python scripts/validate_layout.py
+python scripts/validate_skill_pack_contracts.py
+python scripts/validate_harness_evals.py
+python scripts/validate_no_stale_refs.py
 powershell -ExecutionPolicy Bypass -File scripts/install_for_codex.ps1 -Scope user
 ```
 
@@ -160,7 +183,7 @@ When a user says "use SETUP.md and install this Odoo pack for my IDE", follow th
 5. Otherwise keep the repository in project mode and rely on the host-specific instruction file.
 6. Prefer native skill installation over plugin installation when native support exists.
 7. Prefer project or repo scope unless the user explicitly wants cross-project reuse.
-8. Run `python scripts/validate_layout.py`.
+8. Run all repository validators.
 9. Run the generic installer or the matching wrapper when native skill install is supported.
 10. Confirm that the destination now contains `odoo-development/SKILL.md` and the adjacent support folders.
 11. Tell the user the exact discovery path or project instruction file that was populated.
@@ -173,7 +196,7 @@ After installation, report results in this shape:
 1. `Mode:` native skill install or project-instruction mode
 2. `Target:` exact path or exact instruction file used
 3. `Scope:` project, repo, or user
-4. `Validated:` whether `python scripts/validate_layout.py` passed before install
+4. `Validated:` whether the repository validators passed before install
 5. `Smoke test:` one short prompt the user can run immediately
 
 ## Validation criteria
@@ -183,10 +206,11 @@ An installation is correct only if all of the following are true:
 - Destination folder contains `odoo-development/SKILL.md`
 - Destination folder contains version skills from `odoo-14.0` through `odoo-19.0`
 - Destination folder contains the core and extended domain skills listed above
+- Destination folder contains the support capability skills for documents and spreadsheets
 - Shared router skill contains only router and authoring references
 - Adjacent support folders exist for `agents/`, `workflows/`, `rules/`, and `scripts/`
-- `docs/correct-log/CORRECTIONS_LOG.md` exists for repository maintenance and feedback-loop work
-- Root skill repo still validates with `python scripts/validate_layout.py`
+- `docs/CORRECTIONS_LOG.md` exists for repository maintenance and feedback-loop work
+- Root skill repo still validates with all repository validators
 - The runtime-specific discovery path matches the matrix above
 
 ## Smoke tests

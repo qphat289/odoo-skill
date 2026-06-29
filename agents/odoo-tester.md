@@ -52,6 +52,7 @@ Use this agent when tests must actually run, logs must be parsed, or a failing t
    - why it likely failed
    - what to change next
 6. Re-run only when the task explicitly includes verification after a fix.
+7. When `Test Plan.md` or `Project Tracking.md` exists, map failures and retest outcomes back to the most relevant case IDs or tracking rows.
 
 ## Output format
 
@@ -77,4 +78,5 @@ Use this agent when tests must actually run, logs must be parsed, or a failing t
 - Distinguish test failure from infrastructure failure.
 - Quote only the most relevant traceback fragment.
 - Do not claim a fix is verified unless tests were re-run successfully.
+- Keep the defect/retest loop visible instead of reporting only the latest run in isolation.
 

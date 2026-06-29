@@ -13,6 +13,7 @@ Use this workflow when writing new unit, integration, or security tests rather t
 - target Odoo version
 - module or feature path
 - test type: unit, integration, or security
+- optional `Test Plan.md`
 
 ## Required reads
 
@@ -23,6 +24,7 @@ Use this workflow when writing new unit, integration, or security tests rather t
 ## Optional reads
 
 - matching domain skill for the feature under test
+- `skills/odoo-quality/references/test-plan-template.md` when the generated tests must map back to approved test cases
 
 ## Steps
 
@@ -35,12 +37,14 @@ Use this workflow when writing new unit, integration, or security tests rather t
    - happy path
    - edge cases
    - access checks where relevant
-6. Make sure the generated tests match the real model names, groups, and workflows.
+6. Map generated automated tests back to Test Plan IDs when a plan exists.
+7. Make sure the generated tests match the real model names, groups, and workflows.
 
 ## Outputs
 
 - test file skeletons or complete test cases
 - coverage notes
+- Test Plan mapping notes when applicable
 - missing-case reminders
 
 ## Validation gates

@@ -1,6 +1,6 @@
 interface:
-  display_name: "Odoo Development"
-  short_description: "Odoo addon workflow and version-aware references"
-  default_prompt: "Use the Odoo development skill to handle this addon task with the correct version-specific references."
+  display_name: "Odoo Router"
+  short_description: "Odoo presales, design, QA/QC, tracking, addon, and version-aware routing"
+  default_prompt: "Use the Odoo router skill to classify this Odoo task and load the right presales, design, QA/QC, project tracking, development, review, upgrade, or office-support workflow slice."
 policy:
   allow_implicit_invocation: true

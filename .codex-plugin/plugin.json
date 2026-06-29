@@ -1,7 +1,7 @@
 {
   "name": "odoo-development",
-  "description": "Odoo skill pack with packaged native skill, bundled references, workflows, and installer-oriented setup docs.",
-  "version": "1.1.0",
+  "description": "Odoo skill pack with presales, design, technical planning, QA/QC, project tracking, development, review, upgrade, and harness-driven workflow docs.",
+  "version": "1.2.0",
   "author": {
     "name": "qphat289"
   },
@@ -10,9 +10,9 @@
   "keywords": ["odoo", "python", "owl", "erp"],
   "skills": "./skills/",
   "interface": {
-    "displayName": "Odoo Development",
-    "shortDescription": "Odoo native skill and bundled references",
-    "longDescription": "Packaged Odoo skill with bundled references, workflows, agents, and setup helpers for Codex and similar runtimes.",
+    "displayName": "Odoo Skill Pack",
+    "shortDescription": "Odoo presales, design, QA/QC, tracking, and development workflows",
+    "longDescription": "Packaged Odoo skill with presales routing, Functional Design, Solution Design, Technical Design, QA/QC planning, project tracking, office-file support, development references, workflows, agents, harness validators, and setup helpers for Codex and similar runtimes.",
     "developerName": "qphat289",
     "category": "Developer Tools",
     "capabilities": ["Read", "Write"],
@@ -20,9 +20,10 @@
     "privacyPolicyURL": "https://github.com/qphat289/odoo-skill/blob/main/README.md",
     "termsOfServiceURL": "https://github.com/qphat289/odoo-skill/blob/main/SETUP.md",
     "defaultPrompt": [
-      "Review an Odoo module against the repo workflow.",
-      "Plan an Odoo feature for a specific version.",
-      "Find the right Odoo pattern document for a task."
+      "Analyze customer Odoo requirements and create a fit-gap table.",
+      "Create Functional Design and Solution Design artifacts for an Odoo project.",
+      "Turn Functional Design and Solution Design into Technical Design.md and Test Plan.md.",
+      "Break Technical Design into Project Tracking.md with QA/QC loop visibility."
     ]
   }
 }

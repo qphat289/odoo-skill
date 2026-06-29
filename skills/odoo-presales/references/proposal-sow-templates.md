@@ -46,4 +46,3 @@ Use this reference after fit-gap decisions are stable enough to communicate scop
 2. Keep `Out of Scope` explicit and short.
 3. Do not turn unresolved questions into commitments.
 4. Separate commercial numbers from technical scope so either can change with less confusion.
-

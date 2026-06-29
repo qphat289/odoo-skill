@@ -51,6 +51,7 @@ Use this agent for questions like:
    - side effects
 4. Note written fields, created records, and security/context assumptions.
 5. Call out version-sensitive behavior if it changes interpretation.
+6. When tracing for a bug or failed test, highlight the best handoff points for reviewer, fixer, and tester loops.
 
 ## Output format
 

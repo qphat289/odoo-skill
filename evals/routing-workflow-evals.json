@@ -1,0 +1,192 @@
+{
+  "version": 1,
+  "description": "Machine-checkable routing and workflow eval coverage for the Odoo skill pack.",
+  "scenarios": [
+    {
+      "id": "RP-001",
+      "category": "full_delivery_loop",
+      "request_shape": "Detailed customer requirement with explicit end-to-end delivery request",
+      "expected_primary_workflow": "workflows/full-delivery-loop.md",
+      "artifact_mode": "full",
+      "must_not_do": [
+        "skip presales",
+        "skip QA/QC",
+        "claim completion before fix/retest/reporting"
+      ],
+      "guardrails": [
+        "traceability",
+        "loop synchronization"
+      ]
+    },
+    {
+      "id": "RP-002",
+      "category": "technical_execution",
+      "request_shape": "Bug fix only in an existing Odoo module",
+      "expected_primary_workflow": "workflows/generate-module.md",
+      "artifact_mode": "narrow",
+      "must_not_do": [
+        "force requirement analysis",
+        "force functional design",
+        "force full delivery loop"
+      ],
+      "guardrails": [
+        "version detection",
+        "targeted verification"
+      ]
+    },
+    {
+      "id": "RP-003",
+      "category": "technical_design_review",
+      "request_shape": "Review one existing Technical Design and suggest gaps",
+      "expected_primary_workflow": "workflows/technical-design.md",
+      "artifact_mode": "review",
+      "must_not_do": [
+        "restart the full artifact chain"
+      ],
+      "guardrails": [
+        "design traceability"
+      ]
+    },
+    {
+      "id": "RP-004",
+      "category": "test_generation",
+      "request_shape": "Generate test code from an approved Test Plan",
+      "expected_primary_workflow": "workflows/generate-tests.md",
+      "artifact_mode": "narrow",
+      "must_not_do": [
+        "regenerate presales artifacts",
+        "force project tracking refresh by default"
+      ],
+      "guardrails": [
+        "TP ID mapping"
+      ]
+    },
+    {
+      "id": "RP-005",
+      "category": "project_tracking",
+      "request_shape": "Update project status after a test run",
+      "expected_primary_workflow": "workflows/project-tracking.md",
+      "artifact_mode": "status",
+      "must_not_do": [
+        "create a new technical design"
+      ],
+      "guardrails": [
+        "test-plan sync",
+        "tracking sync"
+      ]
+    },
+    {
+      "id": "RP-006",
+      "category": "presales_discovery",
+      "request_shape": "Business pain points without a clear requirement document",
+      "expected_primary_workflow": "workflows/presales-discovery.md",
+      "artifact_mode": "discovery",
+      "must_not_do": [
+        "jump straight into code",
+        "jump straight into technical design"
+      ],
+      "guardrails": [
+        "business clarification"
+      ]
+    },
+    {
+      "id": "RP-007",
+      "category": "fit_gap_comparison",
+      "request_shape": "Competitor analysis file plus customer requirements for Odoo fit-gap positioning",
+      "expected_primary_workflow": "workflows/requirements-analysis.md",
+      "artifact_mode": "hybrid",
+      "must_not_do": [
+        "force full delivery chain"
+      ],
+      "guardrails": [
+        "source traceability",
+        "fit-gap discipline"
+      ]
+    },
+    {
+      "id": "RP-008",
+      "category": "lightweight_fit_gap",
+      "request_shape": "One feature fit-or-gap check only",
+      "expected_primary_workflow": "workflows/fit-gap.md",
+      "artifact_mode": "lightweight",
+      "must_not_do": [
+        "force XLSX output",
+        "force full presales pack"
+      ],
+      "guardrails": [
+        "concise traceability"
+      ]
+    },
+    {
+      "id": "RP-009",
+      "category": "functional_design",
+      "request_shape": "Customer-facing FSD from approved requirements and fit-gap",
+      "expected_primary_workflow": "workflows/functional-design.md",
+      "artifact_mode": "formal_docx",
+      "must_not_do": [
+        "jump to technical design"
+      ],
+      "guardrails": [
+        "business readability",
+        "docx handling"
+      ]
+    },
+    {
+      "id": "RP-010",
+      "category": "skill_maintenance",
+      "request_shape": "Improve the skill pack after wrong routing or stale instructions",
+      "expected_primary_workflow": "workflows/skill-maintenance.md",
+      "artifact_mode": "maintenance",
+      "must_not_do": [
+        "patch files without updating harness evidence"
+      ],
+      "guardrails": [
+        "pressure scenario update",
+        "validator update"
+      ]
+    },
+    {
+      "id": "RP-011",
+      "category": "office_capability_docx",
+      "request_shape": "Convert or deliver a Markdown design/test artifact as customer-facing DOCX",
+      "expected_primary_workflow": "workflows/functional-design.md",
+      "artifact_mode": "docx_conversion",
+      "must_not_do": [
+        "pretend DOCX is just plain text",
+        "ignore visual QA for customer-facing docs when supported"
+      ],
+      "guardrails": [
+        "docx capability routing"
+      ]
+    },
+    {
+      "id": "RP-012",
+      "category": "office_capability_xlsx",
+      "request_shape": "Analyze or update a customer requirement workbook for fit-gap preparation",
+      "expected_primary_workflow": "workflows/requirements-analysis.md",
+      "artifact_mode": "xlsx_analysis",
+      "must_not_do": [
+        "flatten workbook context into untraceable notes"
+      ],
+      "guardrails": [
+        "sheet and row traceability",
+        "xlsx capability routing"
+      ]
+    },
+    {
+      "id": "RP-013",
+      "category": "loop_sync",
+      "request_shape": "Plan complete, code generated, tests fail, fix and retest until reporting is updated",
+      "expected_primary_workflow": "workflows/full-delivery-loop.md",
+      "artifact_mode": "loop",
+      "must_not_do": [
+        "stop after the first failed test",
+        "claim done before updating Test Plan and Project Tracking"
+      ],
+      "guardrails": [
+        "defect loop",
+        "status synchronization"
+      ]
+    }
+  ]
+}

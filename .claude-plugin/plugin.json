@@ -1,7 +1,7 @@
 {
   "name": "odoo-development",
-  "description": "Odoo skill pack with packaged native skill, bundled references, workflows, and installer-oriented setup docs.",
-  "version": "1.1.0",
+  "description": "Odoo skill pack with presales, design, technical planning, QA/QC, project tracking, development, review, upgrade, and harness-driven workflow docs.",
+  "version": "1.2.0",
   "defaultEnabled": true,
   "author": {
     "name": "qphat289"

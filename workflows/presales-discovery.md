@@ -2,11 +2,13 @@
 
 ## Purpose
 
-Guide the agent through early-stage requirement gathering before `01-business-to-implementation-spec.md` is ready.
+Guide the agent through early-stage requirement gathering before fit-gap, Functional Design, Solution Design, or Technical Design is ready.
 
 ## When to use
 
-Use this workflow when the scope is still business-facing and the team needs structured discovery notes rather than technical design.
+Use this workflow when the scope is still business-facing and the team needs structured discovery notes rather than design artifacts.
+
+If the customer already provided a detailed Scope of Work, requirement document, module list, or function list, prefer `workflows/requirements-analysis.md` instead.
 
 ## Inputs
 
@@ -21,7 +23,7 @@ Use this workflow when the scope is still business-facing and the team needs str
 
 ## Optional reads
 
-- `skills/odoo-presales/references/business-to-implementation-spec-template.md` when discovery is already detailed enough to start the final scope document
+- `skills/odoo-presales/references/requirement-analysis-guide.md` when discovery is already detailed enough to normalize requirements
 
 ## Steps
 
@@ -36,14 +38,14 @@ Use this workflow when the scope is still business-facing and the team needs str
 4. Produce either:
    - a discovery question set
    - or `Discovery Notes` when the answers already exist
-5. Move to fit-gap work when discovery is sufficiently complete.
-6. Start `01-business-to-implementation-spec.md` early if the project benefits from collecting confirmed details in one evolving file.
+5. Move to requirement analysis or fit-gap work when discovery is sufficiently complete.
+6. Start Functional Design or Solution Design only when the required input is specific enough.
 
 ## Outputs
 
 - discovery question set
 - or `Discovery Notes`
-- optional early draft of `01-business-to-implementation-spec.md`
+- optional requirement inventory
 
 ## Validation gates
 

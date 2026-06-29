@@ -61,6 +61,7 @@ Use this agent when the user asks for review, audit, or code quality assessment 
    - tests and safety gaps
 6. Verify uncertain framework patterns against official Odoo source when needed.
 7. Group findings by severity and make each finding actionable.
+8. If `Technical Design.md`, `Test Plan.md`, or `Project Tracking.md` already exists, point out where review findings should reopen or update those artifacts.
 
 ## Output format
 
@@ -88,4 +89,5 @@ Use this agent when the user asks for review, audit, or code quality assessment 
 - Prioritize bugs, security risks, regressions, and missing tests.
 - Use file references when possible.
 - Avoid padding the report with generic advice when no concrete issue exists.
+- Do not mark implementation as complete when the review implies reopened test or tracking work.
 

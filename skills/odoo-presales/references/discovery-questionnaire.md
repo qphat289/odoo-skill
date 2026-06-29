@@ -2,6 +2,10 @@
 
 Use this reference to collect enough business detail before fit-gap analysis or implementation planning.
 
+Use it selectively. Do not run the whole list when the customer already gave detailed material.
+
+Ask only questions that materially improve scope clarity, fit-gap accuracy, solution direction, estimate, risk, or acceptance.
+
 ## Core sections
 
 ### 1. Customer context
@@ -66,8 +70,7 @@ Mark these early because they usually change effort materially:
 
 ## Constraints and Risks
 
-## Open Questions
+## Clarification Register Inputs
 
 ## Suggested Next Step
 ```
-

@@ -26,7 +26,7 @@ Use these version labels consistently in this file:
 1. Read this file during implementation planning to turn repeated mistakes into explicit plan checks.
 2. Read this file again before code generation so the agent avoids the bad pattern instead of only fixing it later.
 3. If review or testing finds a new recurring bug:
-   - log it in `docs/correct-log/CORRECTIONS_LOG.md`
+   - log it in `docs/CORRECTIONS_LOG.md`
    - verify it against the smallest relevant canonical source
    - promote it here only when it is truly repeatable
 

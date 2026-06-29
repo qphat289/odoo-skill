@@ -1,0 +1,6 @@
+interface:
+  display_name: "Odoo Spreadsheets"
+  short_description: "Workbook and tabular-file support for Odoo presales and tracking artifacts"
+  default_prompt: "Use the Odoo spreadsheets skill when this Odoo task touches requirement workbooks, fit-gap sheets, or structured tracking tables."
+policy:
+  allow_implicit_invocation: true

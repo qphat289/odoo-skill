@@ -8,10 +8,15 @@ Guide the agent through generating a new Odoo module or a substantial new featur
 
 Use this workflow for scaffolding a module, adding a major feature, or generating a clean implementation baseline from requirements.
 
+Prefer `workflows/technical-design.md` first when Functional Design and Solution Design exist but `Technical Design.md` has not been produced yet.
+
 ## Inputs
 
 - module name
 - module description
+- optional `Technical Design.md`
+- optional `Test Plan.md`
+- optional `Project Tracking.md`
 - target Odoo version
 - target apps or business area
 - UI stack if relevant
@@ -55,15 +60,18 @@ Use this workflow for scaffolding a module, adding a major feature, or generatin
 4. Load the required version-specific module, model, security, and common bug references.
 5. Translate relevant common bug patterns into a short pre-build checklist for this module.
 6. Load only the optional domain references that match the requested feature set.
-7. Generate the module structure in dependency-safe order:
+7. If `Test Plan.md` exists, implement against the approved scope and keep the affected case IDs visible for later execution and status updates.
+8. Generate the module structure in dependency-safe order:
    - manifest and package init
    - models
    - security
    - views and menus
    - assets or OWL components if needed
    - tests if included
-8. Verify uncertain syntax against official Odoo sources when the version or pattern is sensitive.
-9. Validate manifest ordering, syntax, security baseline, version compliance, and common bug avoidance.
+9. Verify uncertain syntax against official Odoo sources when the version or pattern is sensitive.
+10. Validate manifest ordering, syntax, security baseline, version compliance, and common bug avoidance.
+11. If the request is part of the full delivery loop, hand off to `workflows/generate-tests.md`, `workflows/test-module.md`, or direct fix/retest work as appropriate.
+12. If `Project Tracking.md` is in use, update only the affected task rows with evidence-based status changes.
 
 ## Outputs
 
